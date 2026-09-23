@@ -1,0 +1,32 @@
+STOCK THE BAR LINK / STRUCTURE AUDIT
+
+[PASS] file exists: index.html
+[PASS] file exists: bottles.html
+[PASS] file exists: experiences.html
+[PASS] file exists: barware.html
+[PASS] file exists: giftcards.html
+[PASS] file exists: curated.html
+[PASS] file exists: contribute.html
+[PASS] file exists: donate.html
+[PASS] file exists: basket.html
+[PASS] file exists: detail.html
+[PASS] file exists: styles_KVV.css
+[PASS] file exists: data_KVV.js
+[PASS] file exists: app_KVV.js
+[PASS] exact Giftster URL present
+[PASS] no hamburger/menu implementation
+[PASS] launch gifted = 0
+[PASS] launch received = 0
+[PASS] $500 goal present
+[PASS] Cooper’s Hawk gift card present
+[PASS] specific bottle cards present
+[PASS] Our Basket section on home
+[PASS] detail route supported
+[PASS] weekly basket item rendering supported
+[PASS] asset exists: assets_KVV/basket_hero_KVV.jpg
+[PASS] asset exists: assets_KVV/gala_poster_KVV.jpg
+[PASS] asset exists: assets_KVV/hero_good_drinks_KVV.jpg
+[PASS] asset exists: assets_KVV/logo_lockup_KVV.png
+
+Total checks: 27
+Failures: 0

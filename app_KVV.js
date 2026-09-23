@@ -1,161 +1,188 @@
-(() => {
-  const D = window.STOCK_BAR_DATA;
-  const root = document.getElementById('app');
+(()=>{
+  const D = window.STB_DATA;
+  const app = document.getElementById('app');
+  const page = document.body.dataset.page || 'home';
 
-  const icons = {
-    menu:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`,
-    heart:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.4 5.4 0 0 0-7.6 0L12 5.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 21l8.8-8.8a5.4 5.4 0 0 0 0-7.6z"/></svg>`,
-    bottle:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 2h6v4l2 3v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9l2-3zM9 6h6M7 13h10"/></svg>`,
-    ticket:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v10H3zM8 7c0 2-1 3-3 3v4c2 0 3 1 3 3M16 7c0 2 1 3 3 3v4c-2 0-3 1-3 3"/><path d="m12 10 .7 1.5 1.7.2-1.2 1.1.3 1.7-1.5-.8-1.5.8.3-1.7-1.2-1.1 1.7-.2z"/></svg>`,
-    shaker:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 2h6l-1 4h-4zM8 6h8l2 5-2 11H8L6 11zM7 11h10"/></svg>`,
-    gift:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15M12 6H8.5a2.5 2.5 0 1 1 0-5c2.5 0 3.5 5 3.5 5zM12 6h3.5a2.5 2.5 0 1 0 0-5C13 1 12 6 12 6z"/></svg>`,
-    bag:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg>`,
-    arrow:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`,
-    back:`<svg class="icon-svg" style="width:18px;height:18px" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>`
-  };
-
-  const route = () => (location.hash.replace(/^#\/?/,'').split('?')[0] || 'home').toLowerCase();
-  const param = key => new URLSearchParams(location.hash.includes('?') ? location.hash.split('?')[1] : '').get(key);
   const esc = s => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  const giftster = D.giftsterUrl;
+  const pct = D.gala.goalItems ? Math.round((D.gala.gifted / D.gala.goalItems)*100) : 0;
 
-  function topbar(){
-    return `<header class="topbar"><div class="topbar-inner">
-      <button class="icon-button" data-menu aria-label="Open menu" aria-expanded="false">${icons.menu}</button>
-      <a class="school-mini" href="#home">St. Martha Catholic School</a>
-      <a class="icon-button" href="#basket" aria-label="View our basket">${icons.heart}</a>
-    </div></header>
-    <nav class="nav-drawer" id="nav-drawer" hidden>
-      <a href="#home">Home <span>→</span></a>
-      <a href="#basket">Our Basket <span>→</span></a>
-      <a href="#experiences">Experiences & Memberships <span>→</span></a>
-      <a href="#barware">Barware & Extras <span>→</span></a>
-      <a href="#giftcards">Gift Cards <span>→</span></a>
-      <a href="#curated">Shop Curated List <span>→</span></a>
-      <a href="#contribute">Contribute Any Amount <span>→</span></a>
-      <a href="#donate">Donate Something Similar <span>→</span></a>
+  function icon(name, cls='icon'){
+    const common=`class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
+    const p={
+      heart:`<svg ${common}><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>`,
+      home:`<svg ${common}><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>`,
+      bottle:`<svg ${common}><path d="M9 2h6v4l1.5 2.5V21h-9V8.5L9 6V2z"/><path d="M9 6h6M8 12h8"/></svg>`,
+      ticket:`<svg ${common}><path d="M3 7h18v4a2 2 0 0 0 0 4v4H3v-4a2 2 0 0 0 0-4V7z"/><path d="M12 8.5v7"/></svg>`,
+      shaker:`<svg ${common}><path d="M8 4h8l-1 3 2 3-2 10H9L7 10l2-3-1-3z"/><path d="M9 7h6"/></svg>`,
+      gift:`<svg ${common}><path d="M3 10h18v11H3z"/><path d="M12 10v11M2 7h20v3H2z"/><path d="M12 7H8.5A2.5 2.5 0 1 1 11 4.5L12 7zM12 7h3.5A2.5 2.5 0 1 0 13 4.5L12 7z"/></svg>`,
+      basket:`<svg ${common}><path d="M4 9h16l-1.5 11h-13L4 9z"/><path d="M8 9c0-3 1.8-5 4-5s4 2 4 5"/><path d="M8 13v3M12 13v3M16 13v3"/></svg>`,
+      arrow:`<svg ${common}><path d="M5 12h14M14 7l5 5-5 5"/></svg>`,
+      back:`<svg ${common}><path d="M19 12H5M10 7l-5 5 5 5"/></svg>`,
+      external:`<svg ${common}><path d="M14 3h7v7M10 14 21 3"/><path d="M21 13v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h7"/></svg>`,
+      mail:`<svg ${common}><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>`,
+      check:`<svg ${common}><path d="m5 12 4 4L19 6"/></svg>`
+    };
+    return p[name] || p.gift;
+  }
+
+  function header(){
+    return `<header class="topbar">
+      <a class="home-dot" href="index.html" aria-label="Home">${icon('home')}</a>
+      <a class="brand-home" href="index.html">ST. MARTHA CATHOLIC SCHOOL</a>
+      <a class="heart-link" href="basket.html" aria-label="Our Basket">${icon('heart')}</a>
+    </header>`;
+  }
+
+  function footerNav(){
+    return `<nav class="footer-nav" aria-label="Quick links">
+      <a href="index.html">Home</a>
+      <a href="basket.html">Our Basket</a>
+      <a href="curated.html">Curated List</a>
+      <a href="contribute.html">Contribute</a>
     </nav>`;
   }
 
-  function wrap(content){ return `<main class="site">${topbar()}<div class="page">${content}</div></main>`; }
+  function progressCard(){
+    return `<section class="progress-card" aria-label="Basket progress">
+      <div class="progress-head">
+        <div class="progress-title">${icon('gift','icon-lg')} <span>Basket Progress</span></div>
+        <div class="progress-percent">${pct}%</div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <div class="progress-meta"><span>${D.gala.gifted} of ${D.gala.goalItems} items gifted</span><span>${D.gala.received} received</span></div>
+      <p class="progress-note">${D.gala.gifted===0 && D.gala.received===0 ? 'Nothing has been purchased or received yet.' : 'Thank you — the basket is growing.'} Each grade is asked to create a basket valued at <strong>$${D.gala.goalValue} or more</strong>.</p>
+    </section>`;
+  }
 
-  function logoLockup(){
-    return `<div class="hero-intro">
-      <div class="wordmark-school">St. Martha Catholic School</div>
-      <div class="wordmark-title"><strong>Stock the Bar</strong><svg class="wine-icon" viewBox="0 0 32 58" aria-hidden="true"><path d="M7 2h18l-2 23a8 8 0 0 1-7 7 8 8 0 0 1-7-7zM16 32v19M10 55h12"/><path d="M8 17h16"/></svg></div>
-      <div class="wordmark-tagline">Sip &nbsp; Support &nbsp; Make a Difference</div>
-      <div class="gala-line">Gala 2026</div>
-      <p class="intro-copy">Help us stock the bar for an unforgettable night! Choose an item, contribute toward it, or donate something similar. Every gift helps make the evening a success — and supports our students!</p>
-    </div>`;
+  function mailto(subject, body=''){
+    const to=D.contacts.kelly.email;
+    const cc=[D.contacts.amanda.email,D.contacts.huston.email].join(',');
+    return `mailto:${to}?cc=${encodeURIComponent(cc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
   function categoryRow(){
-    return `<nav class="category-row" aria-label="Browse categories">
-      <a class="category-link" href="#bottles"><div class="category-circle">${icons.bottle}</div><span>Bottles</span></a>
-      <a class="category-link" href="#experiences"><div class="category-circle">${icons.ticket}</div><span>Experiences &<br>Memberships</span></a>
-      <a class="category-link" href="#barware"><div class="category-circle">${icons.shaker}</div><span>Barware &<br>Extras</span></a>
-      <a class="category-link" href="#giftcards"><div class="category-circle">${icons.gift}</div><span>Gift Cards</span></a>
-    </nav>`;
-  }
-
-  function progress(){
-    const p = D.progress;
-    return `<section class="progress-card" aria-label="Basket progress">
-      <div class="progress-head"><div class="progress-title">${icons.gift}<span>Basket Progress</span></div><div class="progress-number">${p.percent}%</div></div>
-      <div class="progress-track"><div class="progress-fill" style="width:${p.percent}%"></div></div>
-      <div class="progress-meta"><span>${p.gifted} of ${p.total} items gifted</span><span>${p.received} received</span></div>
-      <p class="goal-note">Nothing has been purchased or received yet. Each grade is asked to create a basket valued at <strong>$500 or more</strong>.</p>
-    </section>`;
+    const items=[
+      ['bottles.html','bottle','Bottles'],
+      ['experiences.html','ticket','Experiences &<br>Memberships'],
+      ['barware.html','shaker','Barware &<br>Extras'],
+      ['giftcards.html','gift','Gift Cards']
+    ];
+    return `<nav class="category-row" aria-label="Browse categories">${items.map(([href,ic,label])=>`<a class="category-link" href="${href}"><span class="category-circle">${icon(ic,'icon-lg')}</span><span class="category-label">${label}</span></a>`).join('')}</nav>`;
   }
 
   function actionRow(){
-    return `<section class="action-row" aria-label="Ways to help">
-      <a class="action-card primary" href="#curated">${icons.bag}<span>Shop<br>Curated List</span></a>
-      <a class="action-card gold" href="#contribute">${icons.heart}<span>Contribute<br>Any Amount</span></a>
-      <a class="action-card" href="#donate">${icons.gift}<span>Donate<br>Something Similar</span></a>
-    </section>`;
+    return `<div class="action-row">
+      <a class="action-card primary" href="curated.html">${icon('basket')}<span>Shop<br>Curated List</span></a>
+      <a class="action-card gold" href="contribute.html">${icon('heart')}<span>Contribute<br>Any Amount</span></a>
+      <a class="action-card" href="donate.html">${icon('gift')}<span>Donate<br>Something Similar</span></a>
+    </div>`;
   }
+
+  function brandVisual(text){ return `<div class="item-visual brand">${esc(text)}</div>`; }
+
+  function productVisual(kind){
+    let body='';
+    if(kind==='tumbler') body='<rect x="18" y="20" width="38" height="70" rx="12"/><path d="M18 34h38"/>';
+    else if(kind==='chiller') body='<path d="M20 18h36l-5 76H25z"/><path d="M24 34h28"/>';
+    else if(kind==='cups') body='<path d="M12 34h25l-4 45H16z"/><path d="M39 34h25l-4 45H43z"/>';
+    else body='<path d="M22 20h34l-5 14 8 12-10 48H29L19 46l8-12z"/><path d="M27 34h24"/>';
+    return `<div class="item-visual"><svg class="product-svg" viewBox="0 0 76 110" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg></div>`;
+  }
+
+  function pageShell(content){ return `<div class="site-wrap">${header()}${content}${footerNav()}</div>`; }
 
   function home(){
-    return wrap(`${logoLockup()}${categoryRow()}
-      <a class="reference-hero" href="${D.giftster}" target="_blank" rel="noopener" aria-label="Browse our curated Giftster list"><img src="assets/hero_good_drinks_KVV.jpg" alt="Good Drinks. Brighter Futures. Browse our curated Giftster list"></a>
-      ${progress()}${actionRow()}<div class="tagline">Same Spirits. Brighter Tomorrows.</div>`);
+    const featured=D.experiences[0];
+    return pageShell(`
+      <section class="hero-logo"><img src="assets_KVV/logo_lockup_KVV.png" alt="Stock the Bar — Gala 2026"></section>
+      <p class="hero-copy">Help us stock the bar for an unforgettable night! Choose an item, contribute toward it, or donate something similar. Every gift helps make the evening a success — and supports our students!</p>
+      ${categoryRow()}
+      <section class="hero-card"><img src="assets_KVV/hero_good_drinks_KVV.jpg" alt="Good Drinks. Brighter Futures."><a class="hero-button" href="basket.html">See Our Basket ${icon('arrow','icon-sm')}</a></section>
+      ${progressCard()}
+      ${actionRow()}
+      <div class="tagline">Same Spirits. Brighter Tomorrows.</div>
+
+      <div class="section-break"></div>
+      <section class="section-head"><div class="eyebrow">A Toast to Generosity</div><h2>Our Basket</h2><p class="section-sub">Track the 3rd Grade package as contributions come in. The launch state is intentionally empty and accurate.</p></section>
+      <div class="basket-photo"><img src="assets_KVV/basket_hero_KVV.jpg" alt="Stock the Bar basket inspiration"></div>
+      ${progressCard()}
+      <div class="empty-state"><h3>Nothing in the basket yet</h3><p>Be the first to claim an item, contribute any amount, or donate something similar.</p></div>
+      <div class="inline-cta"><a class="btn" href="basket.html">Open Our Basket ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="curated.html">Browse More Items</a></div>
+
+      <div class="section-break"></div>
+      <section class="section-head"><div class="eyebrow">Featured Experience</div><h2>Individual Item Detail</h2><p class="section-sub">Featured items open into the polished detail-page treatment from the approved design.</p></section>
+      <article class="feature-panel">
+        <img src="${featured.hero}" alt="Cooper's Hawk featured experience">
+        <div class="feature-content"><div class="eyebrow">${esc(featured.eyebrow)}</div><h2 class="feature-title">${esc(featured.name)}<br>${esc(featured.title)}</h2><p class="feature-copy">${esc(featured.desc)}</p>
+        <div class="detail-actions"><a class="btn" href="detail.html?id=${featured.id}">View Featured Detail ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="${giftster}" target="_blank" rel="noopener">Claim on Giftster ${icon('external','icon-sm')}</a></div></div>
+      </article>`);
   }
 
-  function pageHead(title,copy){ return `<header class="page-head"><a class="back-link" href="#home">${icons.back} Back to Home</a><div class="page-kicker">3rd Grade · Knights Gala</div><h1>${title}</h1>${copy?`<p>${copy}</p>`:''}</header>`; }
-
-  function experienceCard(x){
-    return `<article class="item-card">
-      <a class="item-visual${x.image?'':' brand'}" href="#detail?id=${encodeURIComponent(x.id)}">${x.image?`<img src="${x.image}" alt="${esc(x.name)}">`:esc(x.name)}</a>
-      <div class="item-card-body"><div class="item-kicker">${esc(x.kicker)}</div><h3>${esc(x.name)}</h3><p>${esc(x.copy)}</p>
-      <div class="card-actions"><a class="btn" href="#detail?id=${encodeURIComponent(x.id)}">${esc(x.action)}</a><a class="btn outline" href="${D.giftster}" target="_blank" rel="noopener">Claim on Giftster</a></div></div>
-    </article>`;
-  }
-
-  function experiences(){
-    return wrap(`${pageHead('Experiences & Memberships','A curated set of standout local experiences. The full list lives on Giftster so families can claim items without duplicates.')}
-      <section class="page-body"><div class="card-grid">${D.experiences.map(experienceCard).join('')}</div><div class="full-list"><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></section>`);
-  }
-
-  function barware(){
-    return wrap(`${pageHead('Barware & Extras','Useful, giftable additions that make the basket feel finished and premium.')}
-      <section class="page-body"><div class="card-grid">${D.barware.map(x=>`<article class="item-card"><a class="item-visual" href="${x.url}" target="_blank" rel="noopener"><img src="${x.image}" alt="${esc(x.name)}"></a><div class="item-card-body"><div class="item-kicker">Barware & Extras</div><h3>${esc(x.name)}</h3><div class="price">${esc(x.price)}</div><div class="card-actions"><a class="btn" href="${x.url}" target="_blank" rel="noopener">View Product</a><a class="btn outline" href="${D.giftster}" target="_blank" rel="noopener">Claim on Giftster</a></div></div></article>`).join('')}</div><div class="full-list"><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></section>`);
-  }
-
-  function giftcards(){
-    return wrap(`${pageHead('Gift Cards','Flexible favorites that are easy to contribute and easy to use in the final basket.')}
-      <section class="page-body"><div class="card-grid">${D.giftcards.map((x,i)=>`<article class="item-card"><div class="item-visual brand">${esc(x.name)}</div><div class="item-card-body"><div class="item-kicker">Gift Card</div><h3>${esc(x.name)}</h3><p>${esc(x.note)}</p><div class="card-actions"><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Claim on Giftster</a></div></div></article>`).join('')}</div><div class="full-list"><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></section>`);
+  function pageIntro(title, subtitle, eyebrow='3rd Grade · Knights Gala'){
+    return `<div class="page-pad"><a class="page-back" href="index.html">${icon('back','icon-sm')} Back to Home</a><div class="eyebrow">${eyebrow}</div><h1 class="page-title">${title}</h1><p class="page-intro">${subtitle}</p>`;
   }
 
   function bottles(){
-    return wrap(`${pageHead('Bottles','The curated bottle list is managed through Giftster so families can claim an item and avoid duplicates.')}
-      <section class="page-body"><div class="info-card"><div class="page-kicker">Curated List</div><h3>Browse the Full Bottle List on Giftster</h3><p>Use Giftster to see the current adult-managed list and claim a contribution. This keeps the website clean and helps prevent duplicate gifts.</p><div class="full-list"><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">Open Bottle List on Giftster</a></div></div></section>`);
+    const cards=D.bottles.map(x=>`<article class="item-card">
+      <div class="item-visual">${icon('bottle','icon-lg')}</div>
+      <div class="item-body"><div class="item-type">${esc(x.type)}</div><div class="item-name">${esc(x.name)}</div><div class="item-sub">${esc(x.note)}</div>
+      <div class="item-actions two"><a class="btn secondary" href="${mailto('3rd Grade Stock the Bar — '+x.name,'Hi Room Moms,\n\nCan you send me the adult purchase link for '+x.name+'?')}" >Request Link</a><a class="btn" href="${giftster}" target="_blank" rel="noopener">Claim</a></div></div>
+    </article>`).join('');
+    return pageShell(`${pageIntro('Bottles','Specific bottle selections from the Room Mom master list — not a generic bottle page.')}<div class="grid">${cards}</div><p class="admin-note">Alcohol-specific purchase links are maintained by the adult Room Moms; the public site keeps the exact item names and a working request/claim path.</p></div>`);
+  }
+
+  function experiences(){
+    const cards=D.experiences.map(x=>`<article class="item-card">${x.hero?`<img class="item-photo" src="${x.hero}" alt="${esc(x.name)}">`:brandVisual(x.name)}<div class="item-body"><div class="item-type">${esc(x.eyebrow)}</div><div class="item-name">${esc(x.name)}</div><div class="item-sub">${esc(x.title)}</div><div class="item-actions"><a class="btn" href="detail.html?id=${x.id}">View Details</a></div></div></article>`).join('');
+    return pageShell(`${pageIntro('Experiences & Memberships','A focused set of the strongest experience options, with the full curated list always available on Giftster.')}<div class="grid">${cards}</div><div class="inline-cta"><a class="btn gold" href="${giftster}" target="_blank" rel="noopener">See Full Curated List ${icon('external','icon-sm')}</a></div></div>`);
+  }
+
+  function barware(){
+    const cards=D.barware.map(x=>`<article class="item-card">${productVisual(x.icon)}<div class="item-body"><div class="item-type">Barware & Extras</div><div class="item-name">${esc(x.name)}</div><div class="item-sub">${esc(x.variant)}</div><div class="item-price">${esc(x.price)}</div><div class="item-actions"><a class="btn" href="${x.link}" target="_blank" rel="noopener">View Item ${icon('external','icon-sm')}</a></div></div></article>`).join('');
+    return pageShell(`${pageIntro('Barware & Extras','Useful additions from the curated list, presented with crisp live type instead of low-resolution screenshots.')}<div class="grid">${cards}</div><div class="inline-cta"><a class="btn gold" href="${giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></div>`);
+  }
+
+  function giftcards(){
+    const cards=D.giftCards.map(x=>`<article class="item-card">${brandVisual(x.name)}<div class="item-body"><div class="item-type">Gift Card</div><div class="item-name">${esc(x.name)}</div><div class="item-sub">${esc(x.sub)}</div><div class="item-actions"><a class="btn" href="${giftster}" target="_blank" rel="noopener">Claim on Giftster</a></div></div></article>`).join('');
+    return pageShell(`${pageIntro('Gift Cards','More flexible options, including Cooper’s Hawk and additional local favorites.')}<div class="grid">${cards}</div><div class="inline-cta"><a class="btn gold" href="${giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></div>`);
   }
 
   function curated(){
-    return wrap(`${pageHead('Shop Our Curated List','Giftster is the claiming system for the complete list, so families can reserve an item and reduce duplicates.')}
-      <section class="page-body"><div class="info-card" style="text-align:center;padding:28px 20px"><div class="page-kicker">Giftster</div><h3 style="font-size:29px">One List. Easy Claiming.</h3><p style="max-width:440px;margin:0 auto 16px">See the full wish list, claim an item, and return here anytime to follow basket progress.</p><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">Open Our Giftster List</a></div></section>`);
+    return pageShell(`${pageIntro('Shop Our Curated List','Giftster is the single place families use to see the full list and claim an item.')}<div class="feature-panel"><div class="feature-content center"><div class="eyebrow">Full Wish List</div><h2 style="margin-top:6px">Giftster</h2><p class="feature-copy">See the complete curated list, claim an item, and help prevent duplicate contributions.</p><a class="btn gold full" href="${giftster}" target="_blank" rel="noopener">Open Our Giftster List ${icon('external','icon-sm')}</a><p class="admin-note">Official list: ${esc(giftster)}</p></div></div></div>`);
   }
 
   function contribute(){
-    return wrap(`${pageHead('Contribute Any Amount','Prefer to contribute toward the basket instead of shopping? Choose the method that works best for you.')}
-      <section class="page-body"><div class="pay-grid">
-        <a class="pay-card" href="${D.payments.venmoUrl}" target="_blank" rel="noopener"><h3>Venmo</h3><p>${D.payments.venmo}</p><small>Open Venmo →</small></a>
-        <button class="pay-card" data-copy="${esc(D.payments.zelle)}"><h3>Zelle</h3><p>${esc(D.payments.zelle)}</p><small>Tap to copy</small></button>
-        <button class="pay-card" data-copy="${esc(D.payments.appleCash)}"><h3>Apple Cash</h3><p>${esc(D.payments.appleCash)}</p><small>Tap to copy</small></button>
-        <a class="pay-card" href="${D.payments.emailCash}"><h3>Cash / Check</h3><p>Email the Room Moms to coordinate.</p><small>Open email →</small></a>
-      </div><div class="roommoms"><a href="${D.payments.emailQuestion}"><strong>Questions? Email the Room Moms</strong></a><br>Kelly Van Vleet · Amanda Bond · Kelly Huston</div><div class="toast" data-toast role="status" aria-live="polite"></div></section>`);
+    const k=D.contacts.kelly;
+    return pageShell(`${pageIntro('Contribute Any Amount','Every contribution helps us reach the $500+ basket goal.')}<div class="goal-band">Basket goal: <strong>$${D.gala.goalValue}+</strong> · Contributions due ${D.gala.deadline}</div><div class="spacer-md"></div><div class="payment-grid">
+      <div class="payment-card"><h3>Venmo</h3><p>${esc(k.venmo)}</p><a class="btn full" href="https://venmo.com/u/Kelly-VANVLEET" target="_blank" rel="noopener">Open Venmo</a></div>
+      <div class="payment-card"><h3>Zelle</h3><p>${esc(k.phone)}<br>${esc(k.email)}</p><a class="btn full" href="mailto:${k.email}?subject=${encodeURIComponent('3rd Grade Stock the Bar — Zelle Contribution')}">Email Kelly</a></div>
+      <div class="payment-card"><h3>Apple Cash</h3><p>${esc(k.phone)}</p><a class="btn full" href="sms:${k.phone.replace(/\D/g,'')}?body=${encodeURIComponent('3rd Grade Stock the Bar contribution')}">Message Kelly</a></div>
+      <div class="payment-card"><h3>Cash / Check</h3><p>Contact the Room Moms and we’ll coordinate.</p><a class="btn full" href="${mailto('3rd Grade Stock the Bar — Cash or Check')}">Email Room Moms</a></div>
+    </div><div class="inline-cta"><a class="btn secondary" href="${mailto('3rd Grade Stock the Bar Question')}">${icon('mail','icon-sm')} Questions? Email the Room Moms</a></div></div>`);
   }
 
   function donate(){
-    return wrap(`${pageHead('Donate Something Similar','Have something great that fits the Stock the Bar theme but is not on the list? Tell us before bringing it in.')}
-      <section class="page-body"><div class="card-grid"><article class="info-card"><h3>Barware</h3><p>Unused, giftable bar tools, glassware, serving pieces or presentation items.</p></article><article class="info-card"><h3>Gift Card or Experience</h3><p>A local gift card or experience that complements the package.</p></article><article class="info-card"><h3>Something Special</h3><p>If it fits the theme, ask us first so we can make sure it is not already covered.</p></article><article class="info-card"><h3>Another Idea?</h3><p>We are happy to help you figure out whether it fits the basket.</p></article></div><div class="full-list"><a class="btn" href="${D.payments.emailDonation}">Let Us Know What You’re Donating</a></div></section>`);
+    return pageShell(`${pageIntro('Donate Something Similar','Have something great in mind that is not on the list? Tell the Room Moms.')}<div class="grid">
+      <div class="item-card">${brandVisual('A Different Item')}<div class="item-body"><div class="item-name">Something comparable</div><div class="item-sub">A different brand or item that fits the basket.</div></div></div>
+      <div class="item-card">${brandVisual('Barware')}<div class="item-body"><div class="item-name">Tools, glassware or extras</div><div class="item-sub">Useful additions are welcome.</div></div></div>
+    </div><div class="inline-cta"><a class="btn full" href="${mailto('3rd Grade Stock the Bar — I Have Something to Donate','Hi Room Moms,\n\nI have something I would like to donate to the 3rd Grade Stock the Bar basket:')}">Let Us Know What You’re Donating ${icon('mail','icon-sm')}</a></div></div>`);
   }
 
   function basket(){
-    return wrap(`${pageHead('Our Basket','A toast to generosity. Follow the 3rd Grade basket as it comes together.')}
-      <section class="page-body"><div class="basket-subtitle">A Toast to Generosity</div><div class="basket-hero"><img src="assets/basket_hero_KVV.jpg" alt="Stock the Bar basket concept"></div>${progress()}
-      <div class="basket-empty"><h3>What’s in the Basket</h3><p>Nothing has been purchased or received yet. As contributions are confirmed during weekly updates, items will appear here.</p><div class="empty-grid"><div class="empty-slot">Claimed items will appear here</div><div class="empty-slot">Received items will appear here</div><div class="empty-slot">Gift cards & experiences will appear here</div></div></div>
-      <div class="full-list"><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Browse More Items</a></div><a class="gala-poster" href="${D.gala.eventUrl}" target="_blank" rel="noopener"><img src="assets/gala_poster_KVV.jpg" alt="Knights Gala at Mote SEA"></a></section>`);
+    const items = Array.isArray(D.basketItems) ? D.basketItems : [];
+    const basketContent = items.length ? `<div class="grid">${items.map(x=>`<article class="item-card">${brandVisual(x.name||'Basket Item')}<div class="item-body"><div class="item-type">${esc(x.status||'Received')}</div><div class="item-name">${esc(x.name||'Basket Item')}</div><div class="item-sub">${esc(x.note||'Confirmed contribution')}</div></div></article>`).join('')}</div>` : `<div class="empty-state"><h3>What’s in the Basket</h3><p>No items have been purchased or received yet. This section will populate as contributions are confirmed during weekly updates.</p></div>`;
+    return pageShell(`${pageIntro('Our Basket','A toast to generosity — track the basket as it comes together.','A Toast to Generosity')}<div class="basket-photo" style="margin-left:0;margin-right:0"><img src="assets_KVV/basket_hero_KVV.jpg" alt="Stock the Bar basket inspiration"></div>${progressCard()}${basketContent}<div class="inline-cta"><a class="btn" href="curated.html">Browse More Items ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="contribute.html">Contribute Any Amount</a></div><div class="gala-card"><img src="assets_KVV/gala_poster_KVV.jpg" alt="Knights Gala — October 24, 2026 at Mote SEA"></div></div>`);
   }
 
   function detail(){
-    const id=param('id')||'coopers'; const x=D.experiences.find(e=>e.id===id)||D.experiences[0];
-    const image=x.detailImage||x.image;
-    const hero = image ? `<div class="detail-hero"><img src="${image}" alt="${esc(x.name)}"></div>` : `<div class="detail-hero brand-detail">${esc(x.name)}</div>`;
-    return wrap(`${pageHead('Experiences & Memberships','Featured experience details.')}
-      <section class="page-body">${hero}<div class="detail-tag">${esc(x.kicker)}</div><h1 class="detail-title">${esc(x.name)}</h1><p class="detail-copy">${esc(x.copy)}</p>
-      <div class="feature-list"><div class="feature-row"><div class="feature-dot">✓</div><div>Featured local experience</div></div><div class="feature-row"><div class="feature-dot">✓</div><div>Claim through Giftster to reduce duplicates</div></div><div class="feature-row"><div class="feature-dot">✓</div><div>Room Moms can help with questions</div></div></div>
-      <div class="detail-actions"><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Claim on Giftster</a><a class="btn outline" href="${D.payments.emailQuestion}">Ask the Room Moms</a></div></section>`);
+    const params=new URLSearchParams(location.search);
+    const id=params.get('id') || 'coopers-hawk';
+    const x=D.experiences.find(v=>v.id===id) || D.experiences[0];
+    const heroMarkup=x.hero ? `<div class="detail-hero"><img src="${x.hero}" alt="${esc(x.name)}"></div>` : `<div class="detail-brand-hero">${esc(x.name)}</div>`;
+    const features=x.features.map(f=>`<li>${icon('check','icon-sm')}<span>${esc(f)}</span></li>`).join('');
+    return pageShell(`<div class="page-pad"><a class="page-back" href="experiences.html">${icon('back','icon-sm')} Back to Experiences</a>${heroMarkup}<div class="eyebrow">${esc(x.eyebrow)}</div><h1 class="page-title">${esc(x.name)}<br>${esc(x.title)}</h1><p class="page-intro">${esc(x.desc)}</p><ul class="feature-list">${features}</ul><div class="detail-note">For age-restricted purchases or bookings, the adult Room Moms manage the direct business purchase link. Families can claim the contribution on Giftster or contact the Room Moms for the business link.</div><div class="detail-actions"><a class="btn" href="${giftster}" target="_blank" rel="noopener">Claim on Giftster ${icon('external','icon-sm')}</a><a class="btn secondary" href="${mailto('3rd Grade Stock the Bar — '+x.name,'Hi Room Moms,\n\nCan you send me the direct business link for '+x.name+'?')}">Request Business Link ${icon('mail','icon-sm')}</a><a class="btn secondary" href="curated.html">Browse Our Curated List ${icon('arrow','icon-sm')}</a></div></div>`);
   }
 
-  const views={home,bottles,experiences,barware,giftcards,curated,contribute,donate,basket,detail};
-
-  function bind(){
-    const menu=document.querySelector('[data-menu]'), nav=document.querySelector('#nav-drawer');
-    if(menu&&nav){menu.addEventListener('click',()=>{const open=nav.hasAttribute('hidden'); if(open) nav.removeAttribute('hidden'); else nav.setAttribute('hidden',''); menu.setAttribute('aria-expanded',String(open));}); nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.setAttribute('hidden','')));}
-    document.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',async()=>{const value=btn.dataset.copy||''; try{await navigator.clipboard.writeText(value)}catch(e){const t=document.createElement('textarea');t.value=value;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();} const toast=document.querySelector('[data-toast]'); if(toast){toast.textContent='Copied: '+value;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1700);}}));
-  }
-
-  function render(){const r=route(); root.innerHTML=(views[r]||views.home)(); bind(); window.scrollTo(0,0);}
-  window.addEventListener('hashchange',render); render();
+  const renderers={home,bottles,experiences,barware,giftcards,curated,contribute,donate,basket,detail};
+  app.innerHTML=(renderers[page]||home)();
 })();

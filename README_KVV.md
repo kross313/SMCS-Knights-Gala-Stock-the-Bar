@@ -1,19 +1,31 @@
-# SMCS 3rd Grade — Stock the Bar site
+# SMCS 3rd Grade — Stock the Bar
 
-Upload the contents of this folder to the root of a GitHub Pages repository. `index.html` is the homepage.
+GitHub Pages upload package for the 2026 Knights Gala.
 
-Included flows:
-- Homepage
-- Bottles
-- Experiences & Memberships
-- Barware & Extras
-- Gift Cards
-- Shop Curated List / Giftster
-- Contribute Any Amount
-- Donate Something Similar
-- Our Basket
-- Featured item/detail page
+## Upload
+Upload every file and the `assets_KVV` folder to the root of the GitHub repository. Keep `index.html` at the repository root. GitHub Pages can serve the site directly from the branch root.
 
-The three locked-design pages and category screens use the approved reference artwork as the visual layer, with live navigation/actions placed over and around it so the presentation stays crisp and consistent.
+## Weekly update
+Edit `data_KVV.js` only:
+- `gala.gifted`
+- `gala.received`
+- `basketItems` when contributions are confirmed
 
-Before public launch, an adult Room Mom should add/confirm any direct age-restricted business purchase URLs in the experience/detail buttons. Giftster and payment/contact flows are already wired where appropriate.
+The progress percentage is calculated automatically from `gifted / goalItems`.
+
+## Site structure
+- index.html — Home + scroll previews for Our Basket and Featured Item Detail
+- bottles.html
+- experiences.html
+- barware.html
+- giftcards.html
+- curated.html
+- contribute.html
+- donate.html
+- basket.html
+- detail.html?id=coopers-hawk (and other experience IDs)
+
+The site intentionally has no hamburger/menu. Navigation is through the visible category/action cards, Back/Home links, the Basket heart, and the simple quick-link footer.
+
+The exact Giftster URL used by the build is:
+https://www.giftster.com/gift/public/ZXddN/
