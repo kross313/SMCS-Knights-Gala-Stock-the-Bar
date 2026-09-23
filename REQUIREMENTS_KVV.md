@@ -17,3 +17,8 @@ This build was checked against the approved mockup and the final project feedbac
 - Typography and icons are live HTML/SVG for crisp rendering; photography is used only where the approved design calls for it.
 - Weekly progress/status is controlled centrally in data_KVV.js.
 - All public controls have working destinations; age-restricted direct-purchase URLs are intentionally adult-admin managed rather than exposed publicly.
+
+- [x] Contact information visible site-wide.
+- [x] Gmail compose link to all three Room Moms.
+- [x] No logo screenshot artifacts visible.
+- [x] Hero contains one clean CTA only.

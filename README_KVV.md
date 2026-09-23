@@ -29,3 +29,10 @@ The site intentionally has no hamburger/menu. Navigation is through the visible 
 
 The exact Giftster URL used by the build is:
 https://www.giftster.com/gift/public/ZXddN/
+
+
+## September 23 correction pass
+- Removed visual artifacts from the logo presentation with a CSS mask.
+- Replaced the translucent hero overlay with an opaque live CTA so no duplicate button text shows through.
+- Added visible Room Mom contact information to every page.
+- Added an Open Gmail action addressed to Kelly Van Vleet with Amanda Bond and Kelly Huston CC’d.

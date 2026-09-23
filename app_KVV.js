@@ -61,6 +61,24 @@
     return `mailto:${to}?cc=${encodeURIComponent(cc)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
+  function gmailCompose(subject, body=''){
+    const to=D.contacts.kelly.email;
+    const cc=[D.contacts.amanda.email,D.contacts.huston.email].join(',');
+    const q=new URLSearchParams({view:'cm',fs:'1',to,cc,su:subject,body});
+    return `https://mail.google.com/mail/?${q.toString()}`;
+  }
+
+  function contactBlock(){
+    const c=[D.contacts.kelly,D.contacts.amanda,D.contacts.huston];
+    return `<section class="contact-card" aria-label="Contact the Room Moms">
+      <div class="eyebrow">Questions?</div>
+      <h3>Contact the 3rd Grade Room Moms</h3>
+      <p class="contact-intro">Questions about an item, contribution, or donation? Email all three Room Moms at once.</p>
+      <a class="btn contact-gmail" href="${gmailCompose('3rd Grade Stock the Bar Question')}" target="_blank" rel="noopener">${icon('mail','icon-sm')} Open Gmail to Email the Room Moms</a>
+      <div class="contact-list">${c.map(x=>`<div class="contact-person"><strong>${esc(x.name)}</strong><a href="mailto:${esc(x.email)}">${esc(x.email)}</a><a href="tel:${String(x.phone).replace(/\D/g,'')}">${esc(x.phone)}</a></div>`).join('')}</div>
+    </section>`;
+  }
+
   function categoryRow(){
     const items=[
       ['bottles.html','bottle','Bottles'],
@@ -90,12 +108,12 @@
     return `<div class="item-visual"><svg class="product-svg" viewBox="0 0 76 110" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg></div>`;
   }
 
-  function pageShell(content){ return `<div class="site-wrap">${header()}${content}${footerNav()}</div>`; }
+  function pageShell(content){ return `<div class="site-wrap">${header()}${content}${contactBlock()}${footerNav()}</div>`; }
 
   function home(){
     const featured=D.experiences[0];
     return pageShell(`
-      <section class="hero-logo"><img src="assets_KVV/logo_lockup_KVV.png" alt="Stock the Bar — Gala 2026"></section>
+      <section class="hero-logo"><div class="hero-logo-art"><img src="assets_KVV/logo_lockup_KVV.png" alt="Stock the Bar — Gala 2026"></div></section>
       <p class="hero-copy">Help us stock the bar for an unforgettable night! Choose an item, contribute toward it, or donate something similar. Every gift helps make the evening a success — and supports our students!</p>
       ${categoryRow()}
       <section class="hero-card"><img src="assets_KVV/hero_good_drinks_KVV.jpg" alt="Good Drinks. Brighter Futures."><a class="hero-button" href="basket.html">See Our Basket ${icon('arrow','icon-sm')}</a></section>

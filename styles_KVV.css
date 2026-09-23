@@ -63,7 +63,11 @@ img{display:block;max-width:100%}
 .icon-lg{width:40px;height:40px}
 .page-pad{padding:30px 28px}
 .hero-logo{padding:28px 26px 14px;text-align:center}
-.hero-logo img{width:min(88%,550px);margin:0 auto}
+.hero-logo-art{position:relative;width:min(88%,550px);margin:0 auto;overflow:hidden;background:#fff}
+.hero-logo-art img{width:100%;margin:0 auto}
+.hero-logo-art::before,.hero-logo-art::after{content:"";position:absolute;top:0;width:46px;height:42px;background:#fff;z-index:2;pointer-events:none}
+.hero-logo-art::before{left:0}
+.hero-logo-art::after{right:0}
 .hero-copy{
   max-width:620px;
   margin:8px auto 22px;
@@ -99,13 +103,13 @@ img{display:block;max-width:100%}
 .hero-card img{width:100%;aspect-ratio:1.52/1;object-fit:cover}
 .hero-card .hero-button{
   position:absolute;
-  left:50%;bottom:18px;
+  left:50%;bottom:10px;
   transform:translateX(-50%);
-  width:min(86%,520px);
-  min-height:58px;
+  width:min(90%,540px);
+  min-height:76px;
   border-radius:999px;
   border:1.5px solid #fff;
-  background:rgba(2,67,57,.94);
+  background:#03483d;
   color:#fff;
   display:flex;align-items:center;justify-content:center;
   gap:10px;
@@ -114,6 +118,7 @@ img{display:block;max-width:100%}
   letter-spacing:.12em;
   font-weight:700;
   box-shadow:0 8px 20px rgba(0,0,0,.18);
+  z-index:3;
 }
 .progress-card{
   margin:14px 18px 0;
@@ -199,6 +204,14 @@ h3{font-size:24px;line-height:1.15}
 .item-price{font-size:15px;font-weight:700;margin-top:2px}
 .item-actions{margin-top:auto;padding-top:10px;display:grid;gap:8px}
 .item-actions.two{grid-template-columns:1fr 1fr}
+.contact-card{margin:18px 18px 8px;padding:22px;border:1px solid var(--line);border-radius:16px;background:#fff;text-align:center}
+.contact-card h3{margin:4px 0 8px}
+.contact-intro{margin:0 auto 16px;color:var(--muted);max-width:560px}
+.contact-gmail{margin:0 auto 18px;max-width:420px;width:100%}
+.contact-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.contact-person{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:3px;font-size:13px;min-width:0}
+.contact-person strong{font-family:Georgia,"Times New Roman",serif;font-size:15px;color:var(--ink)}
+.contact-person a{color:var(--forest);overflow-wrap:anywhere}
 .footer-nav{margin:28px 18px 26px;padding-top:22px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .footer-nav a{min-height:52px;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;font-size:13px;background:#fff}
 .footer-nav a:hover{border-color:#c4ac83;background:var(--soft)}
@@ -224,12 +237,13 @@ h3{font-size:24px;line-height:1.15}
   .brand-home{font-size:10px;letter-spacing:.22em}
   .page-pad{padding:24px 18px}
   .hero-logo{padding:22px 18px 10px}
+  .hero-logo-art::before,.hero-logo-art::after{width:34px;height:34px}
   .hero-copy{font-size:16px;padding:0 8px;margin-bottom:20px}
   .category-row{gap:8px;padding:0 10px 20px}
   .category-circle{width:68px;height:68px}
   .category-label{font-size:14px}
   .hero-card{margin:0 12px}
-  .hero-card .hero-button{bottom:12px;min-height:52px;font-size:12px}
+  .hero-card .hero-button{bottom:8px;min-height:64px;width:92%;font-size:12px}
   .progress-card{margin:12px 12px 0;padding:16px}
   .progress-title{font-size:20px}
   .progress-percent{font-size:24px}
@@ -240,6 +254,8 @@ h3{font-size:24px;line-height:1.15}
   h2{font-size:29px}
   .basket-photo,.empty-state,.gala-card,.feature-panel{margin-left:12px;margin-right:12px}
   .grid{grid-template-columns:1fr}
+  .contact-card{margin-left:12px;margin-right:12px;padding:18px 14px}
+  .contact-list{grid-template-columns:1fr}
   .footer-nav{grid-template-columns:repeat(2,1fr);margin-left:12px;margin-right:12px}
   .payment-grid{grid-template-columns:1fr}
   .item-visual{min-height:150px}
