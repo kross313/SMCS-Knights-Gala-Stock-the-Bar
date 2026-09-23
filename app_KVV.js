@@ -116,7 +116,7 @@
       <section class="hero-logo"><div class="hero-logo-art"><img src="assets_KVV/logo_lockup_KVV.png" alt="Stock the Bar — Gala 2026"></div></section>
       <p class="hero-copy">Help us stock the bar for an unforgettable night! Choose an item, contribute toward it, or donate something similar. Every gift helps make the evening a success — and supports our students!</p>
       ${categoryRow()}
-      <section class="hero-card"><a href="${giftster}" target="_blank" rel="noopener" aria-label="Browse our curated Giftster list"><img src="assets_KVV/hero_good_drinks_KVV.jpg" alt="Good Drinks. Brighter Futures."></a></section>
+      <section class="hero-card"><img src="assets_KVV/hero_good_drinks_KVV.jpg" alt="Good Drinks. Brighter Futures."><a class="hero-hit" href="${giftster}" target="_blank" rel="noopener" aria-label="Browse our curated Giftster list">Browse our curated Giftster list</a></section>
       ${progressCard()}
       ${actionRow()}
       <div class="tagline">Same Spirits. Brighter Tomorrows.</div>

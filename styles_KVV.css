@@ -63,8 +63,8 @@ img{display:block;max-width:100%}
 .icon-lg{width:40px;height:40px}
 .page-pad{padding:30px 28px}
 .hero-logo{padding:28px 26px 14px;text-align:center}
-.hero-logo-art{position:relative;width:min(88%,550px);margin:0 auto;overflow:hidden;background:#fff}
-.hero-logo-art img{width:104%;max-width:none;margin:0 0 0 -2%;display:block}
+.hero-logo-art{position:relative;width:min(90%,560px);margin:0 auto;background:#fff}
+.hero-logo-art img{width:100%;max-width:100%;margin:0 auto;display:block}
 .hero-logo-art::before,.hero-logo-art::after{content:none}
 
 
@@ -101,6 +101,7 @@ img{display:block;max-width:100%}
 .category-label{font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:1.1}
 .hero-card{position:relative;margin:0 18px;border-radius:18px;overflow:hidden;background:#2a1c12}
 .hero-card img{width:100%;aspect-ratio:1.52/1;object-fit:cover}
+.hero-card .hero-hit{position:absolute;inset:0;z-index:5;display:block;border-radius:18px;text-indent:-9999px;overflow:hidden;white-space:nowrap}
 .hero-card .hero-button{
   position:absolute;
   left:50%;bottom:10px;
@@ -236,7 +237,8 @@ h3{font-size:24px;line-height:1.15}
   .topbar{padding:0 16px;min-height:68px}
   .brand-home{font-size:10px;letter-spacing:.22em}
   .page-pad{padding:24px 18px}
-  .hero-logo{padding:22px 18px 10px}
+  .hero-logo{padding:22px 22px 10px}
+  .hero-logo-art{width:min(94%,560px)}
   
   .hero-copy{font-size:16px;padding:0 8px;margin-bottom:20px}
   .category-row{gap:8px;padding:0 10px 20px}
