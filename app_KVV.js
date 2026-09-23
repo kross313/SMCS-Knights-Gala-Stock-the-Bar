@@ -108,7 +108,7 @@
     return `<div class="item-visual"><svg class="product-svg" viewBox="0 0 76 110" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg></div>`;
   }
 
-  function pageShell(content){ return `<div class="site-wrap">${header()}${content}${contactBlock()}${footerNav()}</div>`; }
+  function pageShell(content){ return `<div class="site-wrap">${content}${contactBlock()}${footerNav()}</div>`; }
 
   function home(){
     const featured=D.experiences[0];
@@ -116,7 +116,7 @@
       <section class="hero-logo"><div class="hero-logo-art"><img src="assets_KVV/logo_lockup_KVV.png" alt="Stock the Bar — Gala 2026"></div></section>
       <p class="hero-copy">Help us stock the bar for an unforgettable night! Choose an item, contribute toward it, or donate something similar. Every gift helps make the evening a success — and supports our students!</p>
       ${categoryRow()}
-      <section class="hero-card"><img src="assets_KVV/hero_good_drinks_KVV.jpg" alt="Good Drinks. Brighter Futures."><a class="hero-button" href="basket.html">See Our Basket ${icon('arrow','icon-sm')}</a></section>
+      <section class="hero-card"><img src="assets_KVV/hero_good_drinks_KVV.jpg" alt="Good Drinks. Brighter Futures."></section>
       ${progressCard()}
       ${actionRow()}
       <div class="tagline">Same Spirits. Brighter Tomorrows.</div>

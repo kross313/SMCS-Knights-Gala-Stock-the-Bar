@@ -1,16 +1,7 @@
-SMCS Stock the Bar - Correction QA
-
-PASS - All 10 expected HTML routes exist
-PASS - Exact Giftster URL in data
-PASS - No alternate Giftster public URL present
-PASS - Room Mom contact block renders site-wide via pageShell
-PASS - Gmail compose action present
-PASS - Kelly email present
-PASS - Amanda email present
-PASS - Kelly Huston email present
-PASS - Hero CTA is See Our Basket
-PASS - Logo artifact masks present
-PASS - Hero CTA opaque cover present
-PASS - Launch gifted count is zero
-PASS - Launch received count is zero
-PASS - All statically referenced internal HTML targets exist
+FINAL CORRECTION QA
+- Removed entire duplicate top site header row from every page.
+- Removed Home icon, duplicate ST. MARTHA CATHOLIC SCHOOL header text, and heart icon with that row.
+- Removed both overlaid CTA/text layers from the Good Drinks hero image; image now has no site-added button overlay.
+- Cropped the visible logo-lockup edges so the two baked-in corner marks are outside the displayed logo area.
+- Basket Progress and the action tiles below remain in place.
+- Contact / Gmail section remains in place.

@@ -36,3 +36,5 @@ https://www.giftster.com/gift/public/ZXddN/
 - Replaced the translucent hero overlay with an opaque live CTA so no duplicate button text shows through.
 - Added visible Room Mom contact information to every page.
 - Added an Open Gmail action addressed to Kelly Van Vleet with Amanda Bond and Kelly Huston CC’d.
+
+Final logo cleanup: replaced logo_lockup_KVV.png with clean approved artwork; no stray top-left/top-right marks.

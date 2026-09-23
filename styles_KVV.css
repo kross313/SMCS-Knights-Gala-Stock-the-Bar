@@ -64,10 +64,10 @@ img{display:block;max-width:100%}
 .page-pad{padding:30px 28px}
 .hero-logo{padding:28px 26px 14px;text-align:center}
 .hero-logo-art{position:relative;width:min(88%,550px);margin:0 auto;overflow:hidden;background:#fff}
-.hero-logo-art img{width:100%;margin:0 auto}
-.hero-logo-art::before,.hero-logo-art::after{content:"";position:absolute;top:0;width:46px;height:42px;background:#fff;z-index:2;pointer-events:none}
-.hero-logo-art::before{left:0}
-.hero-logo-art::after{right:0}
+.hero-logo-art img{width:104%;max-width:none;margin:0 0 0 -2%;display:block}
+.hero-logo-art::before,.hero-logo-art::after{content:none}
+
+
 .hero-copy{
   max-width:620px;
   margin:8px auto 22px;
@@ -237,7 +237,7 @@ h3{font-size:24px;line-height:1.15}
   .brand-home{font-size:10px;letter-spacing:.22em}
   .page-pad{padding:24px 18px}
   .hero-logo{padding:22px 18px 10px}
-  .hero-logo-art::before,.hero-logo-art::after{width:34px;height:34px}
+  
   .hero-copy{font-size:16px;padding:0 8px;margin-bottom:20px}
   .category-row{gap:8px;padding:0 10px 20px}
   .category-circle{width:68px;height:68px}
