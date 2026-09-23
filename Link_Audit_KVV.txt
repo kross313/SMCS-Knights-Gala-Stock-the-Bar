@@ -1,0 +1,20 @@
+SMCS Stock the Bar — Clickable QA
+
+Internal routes referenced: barware, basket, bottles, contribute, curated, detail, donate, experiences, giftcards, home
+Missing internal routes: NONE
+Referenced assets missing: NONE
+
+Homepage category tiles: PASS — Bottles, Experiences, Barware & Extras, Gift Cards are anchor links.
+Homepage action tiles: PASS — Curated List, Contribute Any Amount, Donate Something Similar are anchor links.
+Header navigation: PASS — desktop links + functional mobile menu button.
+Bottle filter chips: PASS — functional filter buttons, not dead decoration.
+Experience cards: PASS — image/title/button open detail or Giftster.
+Barware cards: PASS — image/title/button open Giftster claim flow.
+Gift card cards: PASS — image/title/button open Giftster claim flow.
+Contribution cards: PASS — Venmo opens Venmo; Zelle and Apple Cash copy destination; Cash/Check opens Room Mom email.
+Basket: PASS — Browse More Items opens curated list; Gala poster opens Gala event site.
+Donate Similar: PASS — button opens pre-addressed Room Mom email.
+Featured detail: PASS — Giftster claim button is active. Direct age-restricted vendor purchase link remains an adult-admin placeholder.
+
+JS syntax: PASS (node --check)
+Note: browser-level live click automation is blocked in this sandbox, so QA is based on source-level route/action validation plus JS syntax checks.
