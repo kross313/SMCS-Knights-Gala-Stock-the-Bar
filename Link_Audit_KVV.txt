@@ -1,20 +1,41 @@
-SMCS Stock the Bar — Clickable QA
+SMCS Stock the Bar — Link & QA Audit
 
-Internal routes referenced: barware, basket, bottles, contribute, curated, detail, donate, experiences, giftcards, home
-Missing internal routes: NONE
-Referenced assets missing: NONE
+Folder: SMCS_Stock_the_Bar_Locked_Rebuild_KVV
 
-Homepage category tiles: PASS — Bottles, Experiences, Barware & Extras, Gift Cards are anchor links.
-Homepage action tiles: PASS — Curated List, Contribute Any Amount, Donate Something Similar are anchor links.
-Header navigation: PASS — desktop links + functional mobile menu button.
-Bottle filter chips: PASS — functional filter buttons, not dead decoration.
-Experience cards: PASS — image/title/button open detail or Giftster.
-Barware cards: PASS — image/title/button open Giftster claim flow.
-Gift card cards: PASS — image/title/button open Giftster claim flow.
-Contribution cards: PASS — Venmo opens Venmo; Zelle and Apple Cash copy destination; Cash/Check opens Room Mom email.
-Basket: PASS — Browse More Items opens curated list; Gala poster opens Gala event site.
-Donate Similar: PASS — button opens pre-addressed Room Mom email.
-Featured detail: PASS — Giftster claim button is active. Direct age-restricted vendor purchase link remains an adult-admin placeholder.
+PASS — Required GitHub files present: OK
+PASS — All referenced local assets exist: 11 assets checked
+PASS — All internal hash routes resolve: barware, basket, bottles, contribute, curated, detail, donate, experiences, giftcards, home
+PASS — Giftster link is exact: https://www.giftster.com/gift/public/ZXddN/
+PASS — Launch progress is 0%: 0% / 0 gifted / 0 received
+PASS — $500+ goal is visible: Goal copy included on progress card
+PASS — No fake iPhone status UI in HTML/CSS/JS: No mock-phone chrome
+PASS — GitHub Pages title configured: Configured in _config.yml
+PASS — Live text wordmark (not raster logo): Stock the Bar title rendered as HTML/CSS
+PASS — Gift card names use live text, not blurry logo images: Brand tiles are text-based
+PASS — Payment actions wired: Venmo + Zelle copy + Apple Cash copy + email flows
+PASS — Barware product actions wired: 4 YETI product URLs
 
-JS syntax: PASS (node --check)
-Note: browser-level live click automation is blocked in this sandbox, so QA is based on source-level route/action validation plus JS syntax checks.
+External URLs present:
+- https://kross313.github.io/SMCS-Knights-Gala-Stock-the-Bar/
+- https://onecau.se/_fmxtc1
+- https://venmo.com/u/Kelly-VANVLEET
+- https://www.giftster.com/gift/public/ZXddN/
+- https://www.yeti.com/drinkware/barware/cocktail-shaker-20oz.html
+- https://www.yeti.com/drinkware/barware/wine-chiller.html
+- https://www.yeti.com/drinkware/barware/wine-tumbler-10oz.html
+- https://www.yeti.com/drinkware/coffee-tea/21071508248.html
+
+Referenced local assets:
+- assets/basket_hero_KVV.jpg
+- assets/coopers_hawk_hero_KVV.jpg
+- assets/exp_coopers_KVV.jpg
+- assets/exp_michaels_KVV.jpg
+- assets/exp_siesta_rum_KVV.jpg
+- assets/gala_poster_KVV.jpg
+- assets/hero_good_drinks_KVV.jpg
+- assets/yeti_chiller_KVV.jpg
+- assets/yeti_cups_KVV.jpg
+- assets/yeti_shaker_KVV.jpg
+- assets/yeti_tumbler_KVV.jpg
+
+NOTE: This is a source-level QA audit. Runtime browser rendering could not be automated in this container, so visual review should be done once after upload on desktop and phone.

@@ -1,33 +1,20 @@
-SMCS 3rd Grade Stock the Bar — GitHub Pages Upload
+SMCS 3rd Grade — Stock the Bar
+GitHub Pages upload package
 
-Upload every file and the assets folder to the ROOT of the GitHub repository.
-GitHub Pages requires the homepage filename to be exactly: index.html
+Upload ALL files/folders in this package to the ROOT of your GitHub repository.
 
-Weekly update workflow:
-1. Open data_KVV.js.
-2. Update progress.percent, gifted, received, and basketItems.
-3. Save and upload the revised data_KVV.js.
+Important:
+- index.html is required by GitHub Pages.
+- _config.yml sets the GitHub Pages title and description.
+- data_KVV.js is the weekly update file. Update progress values there in one place.
+- Giftster URL is locked to: https://www.giftster.com/gift/public/ZXddN/
+- Launch status is 0% / 0 gifted / 0 received.
+- No fake iPhone frame, time, Wi-Fi, battery, or home indicator is included.
 
-Launch state in this build:
-- 0% progress
-- 0 items gifted
-- 0 received
-- no item shown as purchased, claimed, or donated
+Weekly update fields in data_KVV.js:
+progress.percent
+progress.gifted
+progress.total
+progress.received
 
-Site structure included:
-- Home
-- Bottles
-- Experiences & Memberships
-- Barware & Extras
-- Gift Cards
-- Shop Curated List
-- Contribute Any Amount
-- Donate Something Similar
-- Our Basket
-- Reusable featured detail page
-
-Design notes:
-- No fake iPhone frame, notch, time, Wi-Fi, battery, or home bar.
-- Typography is live HTML/CSS for crisp rendering.
-- Giftster is used for claiming.
-- Adult Room Mom vendor links can be added before launch where appropriate.
+QA files are included separately in the package after final testing.

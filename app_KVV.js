@@ -1,30 +1,161 @@
-const D = window.STOCK_BAR_DATA;
-const root = document.querySelector('#app');
-const routes = ['home','bottles','experiences','barware','giftcards','curated','contribute','donate','basket','detail'];
-function route(){ const h=(location.hash||'#home').slice(1).split('?')[0]; return routes.includes(h)?h:'home'; }
-function header(){return `<header class="topbar"><div class="wrap"><a class="brand" href="#home"><span class="crest">SM</span><span class="brandtext"><strong>ST. MARTHA CATHOLIC SCHOOL</strong><span>KNIGHTS GALA · 3RD GRADE</span></span></a><nav class="nav"><a href="#basket">Our Basket</a><a href="#experiences">Experiences</a><a href="#barware">Barware</a><a href="#contribute">Contribute</a></nav><button class="menu" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav" data-menu>☰</button></div><nav id="mobile-nav" class="mobile-nav" hidden><a href="#basket">Our Basket</a><a href="#bottles">Bottles</a><a href="#experiences">Experiences</a><a href="#barware">Barware</a><a href="#giftcards">Gift Cards</a><a href="#curated">Curated List</a><a href="#contribute">Contribute</a><a href="#donate">Donate Similar</a></nav></header>`}
-function footer(){return `<footer class="footer"><div class="wrap"><strong>Same Spirits. Brighter Tomorrows.</strong><small>3rd Grade · Knights Gala 2026 · Contributions due ${D.gala.deadline}</small></div></footer>`}
-function progress(){return `<div class="progress-card"><div class="progress-top"><div><h3>Basket Progress</h3><div style="color:var(--muted);font-size:12px">Nothing has been purchased or received yet.</div></div><div class="number">${D.progress.percent}%</div></div><div class="bar"><span style="width:${D.progress.percent}%"></span></div><div class="progress-meta"><span>${D.progress.gifted} of ${D.progress.total} items gifted</span><span>${D.progress.received} received</span></div></div>`}
-function card(o, kind='claim'){const target=o.detail?'#detail':D.giftster; const ext=o.detail?'':' target="_blank" rel="noopener"'; return `<article class="card"><a class="card-img" href="${target}"${ext}><img src="${o.image}" alt="${o.name}"></a><div class="card-body">${o.kicker?`<div class="card-kicker">${o.kicker}</div>`:''}<h3><a class="card-title-link" href="${target}"${ext}>${o.name}</a></h3>${o.price?`<div class="price">${o.price}</div>`:''}${o.copy?`<p>${o.copy}</p>`:''}${o.detail?`<a class="btn" href="#detail">View Details</a>`:kind==='giftster'?`<a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Claim on Giftster</a>`:`<a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Claim This Item</a>`}</div></article>`}
-function home(){return `${header()}<main><section class="hero"><div class="wrap hero-grid"><div class="hero-copy"><div class="eyebrow">St. Martha Catholic School · Gala 2026</div><h1>Stock the Bar <em>Gala 2026</em></h1><p>Help the 3rd Grade build a standout silent-auction package for the Knights Gala at Mote SEA.</p></div><div class="hero-art"><img src="assets/hero_good_drinks_KVV.jpg" alt="Good Drinks, Brighter Futures"></div></div></section><section class="category-strip"><div class="wrap category-grid"><a class="cat" href="#bottles"><span class="cat-icon">B</span><span><strong>Bottles</strong><span>Curated ideas</span></span></a><a class="cat" href="#experiences"><span class="cat-icon">E</span><span><strong>Experiences</strong><span>Memberships & outings</span></span></a><a class="cat" href="#barware"><span class="cat-icon">+</span><span><strong>Barware & Extras</strong><span>Useful additions</span></span></a><a class="cat" href="#giftcards"><span class="cat-icon">G</span><span><strong>Gift Cards</strong><span>Flexible favorites</span></span></a></div></section><section class="section"><div class="wrap"><div class="section-head"><div><h2>Build the Basket With Us</h2><p>Browse a few featured ideas, claim an item through Giftster, contribute any amount, or donate something similar.</p></div><a class="text-link" href="#basket">See Our Basket →</a></div>${progress()}<div class="action-grid"><a class="action" href="#curated"><b>Shop Curated List</b><span>Open the full Giftster list and claim an item.</span></a><a class="action" href="#contribute"><b>Contribute Any Amount</b><span>Venmo, Zelle, Apple Cash, cash or check.</span></a><a class="action" href="#donate"><b>Donate Something Similar</b><span>Already have a great item? Tell the Room Moms.</span></a></div></div></section></main>${footer()}`}
-function pageHero(title,desc,extra=''){return `${header()}<main><section class="page-hero"><div class="wrap"><a class="back" href="#home">← Back to Home</a><h1>${title}</h1><p>${desc}</p>${extra}</div></section>`}
-function experiences(){return `${pageHero('Experiences & Memberships','A selective group of strong local experiences. The full curated list stays on Giftster so this page stays polished.') }<section class="section"><div class="wrap"><div class="cards">${D.experiences.map(x=>card(x)).join('')}</div><div style="text-align:center;margin-top:26px"><a class="btn outline" href="${D.giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></div></section></main>${footer()}`}
-function barware(){return `${pageHero('Barware & Extras','A focused selection of polished, useful additions for the basket.')}<section class="section"><div class="wrap"><div class="cards">${D.barware.map(x=>card(x,'giftster')).join('')}</div><div style="text-align:center;margin-top:26px"><a class="btn outline" href="${D.giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></div></section></main>${footer()}`}
-function giftcards(){return `${pageHero('Gift Cards','Flexible options that help round out the basket without crowding the site.')}<section class="section"><div class="wrap"><div class="cards">${D.giftcards.map(x=>card({...x,copy:'Choose an amount on the curated Giftster list.'},'giftster')).join('')}</div></div></section></main>${footer()}`}
-function bottles(){return `${pageHero('Bottles','Featured bottle categories for the adult-run fundraiser. Specific selections and claiming are maintained on the Room Mom curated list.',`<div class="filter-row"><button class="chip active" data-filter="all">All</button><button class="chip" data-filter="wine">Wine</button><button class="chip" data-filter="whiskey">Whiskey / Bourbon</button><button class="chip" data-filter="tequila">Tequila</button><button class="chip" data-filter="champagne">Champagne</button></div>`)}<section class="section"><div class="wrap"><div class="cards"><article class="card" data-bottle="wine"><div class="card-body"><div class="card-kicker">Featured Category</div><h3>Premium Wine</h3><p>See the adult-managed curated list for current selections and claiming.</p><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Open Curated List</a></div></article><article class="card" data-bottle="whiskey"><div class="card-body"><div class="card-kicker">Featured Category</div><h3>Whiskey / Bourbon</h3><p>See the adult-managed curated list for current selections and claiming.</p><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Open Curated List</a></div></article><article class="card" data-bottle="tequila"><div class="card-body"><div class="card-kicker">Featured Category</div><h3>Tequila</h3><p>See the adult-managed curated list for current selections and claiming.</p><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Open Curated List</a></div></article><article class="card" data-bottle="champagne"><div class="card-body"><div class="card-kicker">Featured Category</div><h3>Champagne & Bubbles</h3><p>See the adult-managed curated list for current selections and claiming.</p><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Open Curated List</a></div></article></div></div></section></main>${footer()}`}
-function curated(){return `${pageHero('Shop Our Curated List','Giftster is the claiming system for the full list, so families can reserve an item and reduce duplicates.')}<section class="section"><div class="wrap"><div class="progress-card" style="max-width:720px;margin:auto;text-align:center;padding:40px"><div class="eyebrow" style="color:var(--gold)">Giftster</div><h2 style="font-family:var(--serif);font-size:38px;margin:10px 0">One List. Easy Claiming.</h2><p style="color:var(--muted);line-height:1.6">See the full wish list, claim an item, and return here anytime to follow basket progress.</p><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">Open Our Giftster List</a></div></div></section></main>${footer()}`}
-function contribute(){return `${pageHero('Contribute Any Amount','Prefer to contribute toward the basket instead of shopping? Choose the method that works best for you.')}<section class="section"><div class="wrap"><div class="pay-grid"><a class="pay" href="${D.payments.venmoUrl}" target="_blank" rel="noopener"><h3>Venmo</h3><p>${D.payments.venmo}</p><small>Open Venmo →</small></a><button class="pay pay-button" data-copy="${D.payments.zelle}"><h3>Zelle</h3><p>${D.payments.zelle}</p><small>Tap to copy</small></button><button class="pay pay-button" data-copy="${D.payments.appleCash}"><h3>Apple Cash</h3><p>${D.payments.appleCash}</p><small>Tap to copy</small></button><a class="pay" href="${D.payments.email}"><h3>Cash / Check</h3><p>Email the Room Moms to coordinate.</p><small>Open email →</small></a></div><div class="roommoms"><a href="${D.payments.email}"><strong>Questions? Email the Room Moms</strong></a><br>Kelly Van Vleet · Amanda Bond · Kelly Huston</div><div class="toast" data-toast role="status" aria-live="polite"></div></div></section></main>${footer()}`}
-function donate(){return `${pageHero('Donate Something Similar','Have something great that fits the Stock the Bar theme but is not on the list? Tell us before bringing it in.')}<section class="section"><div class="wrap"><div class="cards"><article class="card"><div class="card-body"><div class="card-kicker">Idea</div><h3>Barware</h3><p>Unused, giftable bar tools, glassware, serving pieces or presentation items.</p></div></article><article class="card"><div class="card-body"><div class="card-kicker">Idea</div><h3>Gift Card or Experience</h3><p>A local business gift card or experience that complements the package.</p></div></article><article class="card"><div class="card-body"><div class="card-kicker">Idea</div><h3>Something Special</h3><p>If it fits the theme, ask us. We can make sure it is not already covered.</p></div></article></div><div style="text-align:center;margin-top:24px"><a class="btn" href="mailto:kellyross412@gmail.com?cc=arose2189@gmail.com,kellylpower@yahoo.com&subject=3rd%20Grade%20Stock%20the%20Bar%20Donation">Let Us Know What You’re Donating</a></div></div></section></main>${footer()}`}
-function basket(){return `${pageHero('Our Basket','Follow the 3rd Grade basket as it comes together. Launch state is intentionally empty because nothing has been purchased, claimed, or received yet.')}<section class="section"><div class="wrap basket-layout"><div class="basket-image"><img src="assets/basket_hero_KVV.jpg" alt="Stock the Bar basket concept"><div style="padding:12px 4px 2px;color:var(--muted);font-size:11px">Basket image is a presentation concept; progress below reflects actual contributions.</div></div><div class="basket-panel">${progress()}<div class="empty-state"><h3>Nothing added yet</h3><p>As contributions are confirmed during weekly updates, donated and received items will appear here.</p><div class="mini-items"><div class="mini-item">Claimed items will appear here</div><div class="mini-item">Received items will appear here</div><div class="mini-item">Gift cards & experiences will appear here</div></div></div><a class="btn" href="#curated">Browse More Items</a><a class="gala-card" href="${D.gala.eventUrl}" target="_blank" rel="noopener"><img src="assets/gala_poster_KVV.jpg" alt="Knights Gala at Mote SEA"></a></div></div></section></main>${footer()}`}
-function detail(){return `${pageHero('Featured Experience','A reusable detail-page format for featured experiences and premium items.')}<section class="section"><div class="wrap detail"><div class="detail-image"><img src="assets/coopers_hawk_hero_KVV.jpg" alt="Cooper’s Hawk featured experience"></div><div class="detail-copy"><div class="eyebrow" style="color:var(--gold)">Experiences & Memberships</div><h1>Cooper’s Hawk Gift Membership</h1><p>A polished featured experience with enough detail to feel special without overcrowding the main category page.</p><div class="feature-list"><div class="feature"><b>Giftable</b><span>Experience</span></div><div class="feature"><b>Featured</b><span>Curated pick</span></div><div class="feature"><b>Flexible</b><span>Multiple options</span></div></div><div class="notice">Direct age-restricted vendor purchase links are intentionally left for an adult Room Mom to add before launch. Claiming can remain on Giftster.</div><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Claim on Giftster</a></div></div></section></main>${footer()}`}
-const views={home,bottles,experiences,barware,giftcards,curated,contribute,donate,basket,detail};
-function bindInteractions(){
-  const menu=document.querySelector('[data-menu]');
-  const mobile=document.querySelector('#mobile-nav');
-  if(menu&&mobile){menu.addEventListener('click',()=>{const open=mobile.hasAttribute('hidden'); if(open) mobile.removeAttribute('hidden'); else mobile.setAttribute('hidden',''); menu.setAttribute('aria-expanded',String(open)); menu.setAttribute('aria-label',open?'Close menu':'Open menu')}); mobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mobile.setAttribute('hidden','');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open menu')}));}
-  document.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',async()=>{const value=btn.getAttribute('data-copy')||''; try{await navigator.clipboard.writeText(value)}catch(e){const ta=document.createElement('textarea');ta.value=value;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove()} const toast=document.querySelector('[data-toast]'); if(toast){toast.textContent='Copied: '+value; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2200)}}));
-  const chips=[...document.querySelectorAll('[data-filter]')];
-  if(chips.length){chips.forEach(ch=>ch.addEventListener('click',()=>{const f=ch.dataset.filter; chips.forEach(x=>x.classList.toggle('active',x===ch)); document.querySelectorAll('[data-bottle]').forEach(card=>{card.hidden=!(f==='all'||card.dataset.bottle===f)})}))}
-}
-function render(){root.innerHTML=views[route()]();bindInteractions();window.scrollTo(0,0)}
-window.addEventListener('hashchange',render);render();
+(() => {
+  const D = window.STOCK_BAR_DATA;
+  const root = document.getElementById('app');
+
+  const icons = {
+    menu:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`,
+    heart:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.4 5.4 0 0 0-7.6 0L12 5.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 21l8.8-8.8a5.4 5.4 0 0 0 0-7.6z"/></svg>`,
+    bottle:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 2h6v4l2 3v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9l2-3zM9 6h6M7 13h10"/></svg>`,
+    ticket:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v10H3zM8 7c0 2-1 3-3 3v4c2 0 3 1 3 3M16 7c0 2 1 3 3 3v4c-2 0-3 1-3 3"/><path d="m12 10 .7 1.5 1.7.2-1.2 1.1.3 1.7-1.5-.8-1.5.8.3-1.7-1.2-1.1 1.7-.2z"/></svg>`,
+    shaker:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 2h6l-1 4h-4zM8 6h8l2 5-2 11H8L6 11zM7 11h10"/></svg>`,
+    gift:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15M12 6H8.5a2.5 2.5 0 1 1 0-5c2.5 0 3.5 5 3.5 5zM12 6h3.5a2.5 2.5 0 1 0 0-5C13 1 12 6 12 6z"/></svg>`,
+    bag:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2"/></svg>`,
+    arrow:`<svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`,
+    back:`<svg class="icon-svg" style="width:18px;height:18px" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>`
+  };
+
+  const route = () => (location.hash.replace(/^#\/?/,'').split('?')[0] || 'home').toLowerCase();
+  const param = key => new URLSearchParams(location.hash.includes('?') ? location.hash.split('?')[1] : '').get(key);
+  const esc = s => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+
+  function topbar(){
+    return `<header class="topbar"><div class="topbar-inner">
+      <button class="icon-button" data-menu aria-label="Open menu" aria-expanded="false">${icons.menu}</button>
+      <a class="school-mini" href="#home">St. Martha Catholic School</a>
+      <a class="icon-button" href="#basket" aria-label="View our basket">${icons.heart}</a>
+    </div></header>
+    <nav class="nav-drawer" id="nav-drawer" hidden>
+      <a href="#home">Home <span>→</span></a>
+      <a href="#basket">Our Basket <span>→</span></a>
+      <a href="#experiences">Experiences & Memberships <span>→</span></a>
+      <a href="#barware">Barware & Extras <span>→</span></a>
+      <a href="#giftcards">Gift Cards <span>→</span></a>
+      <a href="#curated">Shop Curated List <span>→</span></a>
+      <a href="#contribute">Contribute Any Amount <span>→</span></a>
+      <a href="#donate">Donate Something Similar <span>→</span></a>
+    </nav>`;
+  }
+
+  function wrap(content){ return `<main class="site">${topbar()}<div class="page">${content}</div></main>`; }
+
+  function logoLockup(){
+    return `<div class="hero-intro">
+      <div class="wordmark-school">St. Martha Catholic School</div>
+      <div class="wordmark-title"><strong>Stock the Bar</strong><svg class="wine-icon" viewBox="0 0 32 58" aria-hidden="true"><path d="M7 2h18l-2 23a8 8 0 0 1-7 7 8 8 0 0 1-7-7zM16 32v19M10 55h12"/><path d="M8 17h16"/></svg></div>
+      <div class="wordmark-tagline">Sip &nbsp; Support &nbsp; Make a Difference</div>
+      <div class="gala-line">Gala 2026</div>
+      <p class="intro-copy">Help us stock the bar for an unforgettable night! Choose an item, contribute toward it, or donate something similar. Every gift helps make the evening a success — and supports our students!</p>
+    </div>`;
+  }
+
+  function categoryRow(){
+    return `<nav class="category-row" aria-label="Browse categories">
+      <a class="category-link" href="#bottles"><div class="category-circle">${icons.bottle}</div><span>Bottles</span></a>
+      <a class="category-link" href="#experiences"><div class="category-circle">${icons.ticket}</div><span>Experiences &<br>Memberships</span></a>
+      <a class="category-link" href="#barware"><div class="category-circle">${icons.shaker}</div><span>Barware &<br>Extras</span></a>
+      <a class="category-link" href="#giftcards"><div class="category-circle">${icons.gift}</div><span>Gift Cards</span></a>
+    </nav>`;
+  }
+
+  function progress(){
+    const p = D.progress;
+    return `<section class="progress-card" aria-label="Basket progress">
+      <div class="progress-head"><div class="progress-title">${icons.gift}<span>Basket Progress</span></div><div class="progress-number">${p.percent}%</div></div>
+      <div class="progress-track"><div class="progress-fill" style="width:${p.percent}%"></div></div>
+      <div class="progress-meta"><span>${p.gifted} of ${p.total} items gifted</span><span>${p.received} received</span></div>
+      <p class="goal-note">Nothing has been purchased or received yet. Each grade is asked to create a basket valued at <strong>$500 or more</strong>.</p>
+    </section>`;
+  }
+
+  function actionRow(){
+    return `<section class="action-row" aria-label="Ways to help">
+      <a class="action-card primary" href="#curated">${icons.bag}<span>Shop<br>Curated List</span></a>
+      <a class="action-card gold" href="#contribute">${icons.heart}<span>Contribute<br>Any Amount</span></a>
+      <a class="action-card" href="#donate">${icons.gift}<span>Donate<br>Something Similar</span></a>
+    </section>`;
+  }
+
+  function home(){
+    return wrap(`${logoLockup()}${categoryRow()}
+      <a class="reference-hero" href="${D.giftster}" target="_blank" rel="noopener" aria-label="Browse our curated Giftster list"><img src="assets/hero_good_drinks_KVV.jpg" alt="Good Drinks. Brighter Futures. Browse our curated Giftster list"></a>
+      ${progress()}${actionRow()}<div class="tagline">Same Spirits. Brighter Tomorrows.</div>`);
+  }
+
+  function pageHead(title,copy){ return `<header class="page-head"><a class="back-link" href="#home">${icons.back} Back to Home</a><div class="page-kicker">3rd Grade · Knights Gala</div><h1>${title}</h1>${copy?`<p>${copy}</p>`:''}</header>`; }
+
+  function experienceCard(x){
+    return `<article class="item-card">
+      <a class="item-visual${x.image?'':' brand'}" href="#detail?id=${encodeURIComponent(x.id)}">${x.image?`<img src="${x.image}" alt="${esc(x.name)}">`:esc(x.name)}</a>
+      <div class="item-card-body"><div class="item-kicker">${esc(x.kicker)}</div><h3>${esc(x.name)}</h3><p>${esc(x.copy)}</p>
+      <div class="card-actions"><a class="btn" href="#detail?id=${encodeURIComponent(x.id)}">${esc(x.action)}</a><a class="btn outline" href="${D.giftster}" target="_blank" rel="noopener">Claim on Giftster</a></div></div>
+    </article>`;
+  }
+
+  function experiences(){
+    return wrap(`${pageHead('Experiences & Memberships','A curated set of standout local experiences. The full list lives on Giftster so families can claim items without duplicates.')}
+      <section class="page-body"><div class="card-grid">${D.experiences.map(experienceCard).join('')}</div><div class="full-list"><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></section>`);
+  }
+
+  function barware(){
+    return wrap(`${pageHead('Barware & Extras','Useful, giftable additions that make the basket feel finished and premium.')}
+      <section class="page-body"><div class="card-grid">${D.barware.map(x=>`<article class="item-card"><a class="item-visual" href="${x.url}" target="_blank" rel="noopener"><img src="${x.image}" alt="${esc(x.name)}"></a><div class="item-card-body"><div class="item-kicker">Barware & Extras</div><h3>${esc(x.name)}</h3><div class="price">${esc(x.price)}</div><div class="card-actions"><a class="btn" href="${x.url}" target="_blank" rel="noopener">View Product</a><a class="btn outline" href="${D.giftster}" target="_blank" rel="noopener">Claim on Giftster</a></div></div></article>`).join('')}</div><div class="full-list"><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></section>`);
+  }
+
+  function giftcards(){
+    return wrap(`${pageHead('Gift Cards','Flexible favorites that are easy to contribute and easy to use in the final basket.')}
+      <section class="page-body"><div class="card-grid">${D.giftcards.map((x,i)=>`<article class="item-card"><div class="item-visual brand">${esc(x.name)}</div><div class="item-card-body"><div class="item-kicker">Gift Card</div><h3>${esc(x.name)}</h3><p>${esc(x.note)}</p><div class="card-actions"><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Claim on Giftster</a></div></div></article>`).join('')}</div><div class="full-list"><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></section>`);
+  }
+
+  function bottles(){
+    return wrap(`${pageHead('Bottles','The curated bottle list is managed through Giftster so families can claim an item and avoid duplicates.')}
+      <section class="page-body"><div class="info-card"><div class="page-kicker">Curated List</div><h3>Browse the Full Bottle List on Giftster</h3><p>Use Giftster to see the current adult-managed list and claim a contribution. This keeps the website clean and helps prevent duplicate gifts.</p><div class="full-list"><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">Open Bottle List on Giftster</a></div></div></section>`);
+  }
+
+  function curated(){
+    return wrap(`${pageHead('Shop Our Curated List','Giftster is the claiming system for the complete list, so families can reserve an item and reduce duplicates.')}
+      <section class="page-body"><div class="info-card" style="text-align:center;padding:28px 20px"><div class="page-kicker">Giftster</div><h3 style="font-size:29px">One List. Easy Claiming.</h3><p style="max-width:440px;margin:0 auto 16px">See the full wish list, claim an item, and return here anytime to follow basket progress.</p><a class="btn gold" href="${D.giftster}" target="_blank" rel="noopener">Open Our Giftster List</a></div></section>`);
+  }
+
+  function contribute(){
+    return wrap(`${pageHead('Contribute Any Amount','Prefer to contribute toward the basket instead of shopping? Choose the method that works best for you.')}
+      <section class="page-body"><div class="pay-grid">
+        <a class="pay-card" href="${D.payments.venmoUrl}" target="_blank" rel="noopener"><h3>Venmo</h3><p>${D.payments.venmo}</p><small>Open Venmo →</small></a>
+        <button class="pay-card" data-copy="${esc(D.payments.zelle)}"><h3>Zelle</h3><p>${esc(D.payments.zelle)}</p><small>Tap to copy</small></button>
+        <button class="pay-card" data-copy="${esc(D.payments.appleCash)}"><h3>Apple Cash</h3><p>${esc(D.payments.appleCash)}</p><small>Tap to copy</small></button>
+        <a class="pay-card" href="${D.payments.emailCash}"><h3>Cash / Check</h3><p>Email the Room Moms to coordinate.</p><small>Open email →</small></a>
+      </div><div class="roommoms"><a href="${D.payments.emailQuestion}"><strong>Questions? Email the Room Moms</strong></a><br>Kelly Van Vleet · Amanda Bond · Kelly Huston</div><div class="toast" data-toast role="status" aria-live="polite"></div></section>`);
+  }
+
+  function donate(){
+    return wrap(`${pageHead('Donate Something Similar','Have something great that fits the Stock the Bar theme but is not on the list? Tell us before bringing it in.')}
+      <section class="page-body"><div class="card-grid"><article class="info-card"><h3>Barware</h3><p>Unused, giftable bar tools, glassware, serving pieces or presentation items.</p></article><article class="info-card"><h3>Gift Card or Experience</h3><p>A local gift card or experience that complements the package.</p></article><article class="info-card"><h3>Something Special</h3><p>If it fits the theme, ask us first so we can make sure it is not already covered.</p></article><article class="info-card"><h3>Another Idea?</h3><p>We are happy to help you figure out whether it fits the basket.</p></article></div><div class="full-list"><a class="btn" href="${D.payments.emailDonation}">Let Us Know What You’re Donating</a></div></section>`);
+  }
+
+  function basket(){
+    return wrap(`${pageHead('Our Basket','A toast to generosity. Follow the 3rd Grade basket as it comes together.')}
+      <section class="page-body"><div class="basket-subtitle">A Toast to Generosity</div><div class="basket-hero"><img src="assets/basket_hero_KVV.jpg" alt="Stock the Bar basket concept"></div>${progress()}
+      <div class="basket-empty"><h3>What’s in the Basket</h3><p>Nothing has been purchased or received yet. As contributions are confirmed during weekly updates, items will appear here.</p><div class="empty-grid"><div class="empty-slot">Claimed items will appear here</div><div class="empty-slot">Received items will appear here</div><div class="empty-slot">Gift cards & experiences will appear here</div></div></div>
+      <div class="full-list"><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Browse More Items</a></div><a class="gala-poster" href="${D.gala.eventUrl}" target="_blank" rel="noopener"><img src="assets/gala_poster_KVV.jpg" alt="Knights Gala at Mote SEA"></a></section>`);
+  }
+
+  function detail(){
+    const id=param('id')||'coopers'; const x=D.experiences.find(e=>e.id===id)||D.experiences[0];
+    const image=x.detailImage||x.image;
+    const hero = image ? `<div class="detail-hero"><img src="${image}" alt="${esc(x.name)}"></div>` : `<div class="detail-hero brand-detail">${esc(x.name)}</div>`;
+    return wrap(`${pageHead('Experiences & Memberships','Featured experience details.')}
+      <section class="page-body">${hero}<div class="detail-tag">${esc(x.kicker)}</div><h1 class="detail-title">${esc(x.name)}</h1><p class="detail-copy">${esc(x.copy)}</p>
+      <div class="feature-list"><div class="feature-row"><div class="feature-dot">✓</div><div>Featured local experience</div></div><div class="feature-row"><div class="feature-dot">✓</div><div>Claim through Giftster to reduce duplicates</div></div><div class="feature-row"><div class="feature-dot">✓</div><div>Room Moms can help with questions</div></div></div>
+      <div class="detail-actions"><a class="btn" href="${D.giftster}" target="_blank" rel="noopener">Claim on Giftster</a><a class="btn outline" href="${D.payments.emailQuestion}">Ask the Room Moms</a></div></section>`);
+  }
+
+  const views={home,bottles,experiences,barware,giftcards,curated,contribute,donate,basket,detail};
+
+  function bind(){
+    const menu=document.querySelector('[data-menu]'), nav=document.querySelector('#nav-drawer');
+    if(menu&&nav){menu.addEventListener('click',()=>{const open=nav.hasAttribute('hidden'); if(open) nav.removeAttribute('hidden'); else nav.setAttribute('hidden',''); menu.setAttribute('aria-expanded',String(open));}); nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.setAttribute('hidden','')));}
+    document.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',async()=>{const value=btn.dataset.copy||''; try{await navigator.clipboard.writeText(value)}catch(e){const t=document.createElement('textarea');t.value=value;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();} const toast=document.querySelector('[data-toast]'); if(toast){toast.textContent='Copied: '+value;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1700);}}));
+  }
+
+  function render(){const r=route(); root.innerHTML=(views[r]||views.home)(); bind(); window.scrollTo(0,0);}
+  window.addEventListener('hashchange',render); render();
+})();
