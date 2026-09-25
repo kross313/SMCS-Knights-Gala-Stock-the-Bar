@@ -31,12 +31,7 @@ window.STB_DATA = {
     {id:"fiorelli", name:"Fiorelli Winery & Vineyard", title:"Winery Experience", eyebrow:"Experience", desc:"A local vineyard experience represented on the master list.", features:["Local destination","Experience option","Gift-friendly","Claim through Giftster"]},
     {id:"loaded-cannon", name:"Loaded Cannon Spirits", title:"Classes & Experience", eyebrow:"Experience", desc:"A local experience option from the Room Mom master list.", features:["Local business","Class-based experience","Gift-friendly","Claim through Giftster"]}
   ],
-  barware: [
-    {id:"yeti-wine-tumbler", name:"YETI Rambler 10 oz Wine Tumbler", variant:"Pampa Green", price:"$30", link:"https://www.yeti.com/drinkware/barware/wine-tumbler-10oz.html", icon:"tumbler"},
-    {id:"yeti-wine-chiller", name:"YETI Rambler Wine Chiller", variant:"Pampa Green", price:"$75", link:"https://www.yeti.com/drinkware/barware/wine-chiller.html", icon:"chiller"},
-    {id:"yeti-stackable", name:"YETI Rambler 4 oz Stackable Cups (2-pack)", variant:"Pampa Green", price:"$30", link:"https://www.yeti.com/drinkware/coffee-tea/21071508248.html", icon:"cups"},
-    {id:"yeti-shaker", name:"YETI Rambler 20 oz Cocktail Shaker", variant:"Pampa Green", price:"$65", link:"https://www.yeti.com/drinkware/barware/cocktail-shaker-20oz.html", icon:"shaker"},
-  ],
+  barware: [],
   giftCards: [
     {name:"Cooper’s Hawk", sub:"Gift Card / Membership"},
     {name:"Total Wine & More", sub:"Gift Card"},

@@ -194,8 +194,12 @@
   }
 
   function barware(){
-    const cards=D.barware.map(x=>`<article class="item-card">${productVisual(x.icon)}<div class="item-body"><div class="item-type">Barware & Extras</div><div class="item-name">${esc(x.name)}</div><div class="item-sub">${esc(x.variant)}</div><div class="item-price">${esc(x.price)}</div><div class="item-actions"><a class="btn" href="${x.link}" target="_blank" rel="noopener">View Item ${icon('external','icon-sm')}</a></div></div></article>`).join('');
-    return pageShell(`${pageIntro('Barware & Extras','Useful additions from the curated list, presented with crisp live type instead of low-resolution screenshots.')}<div class="grid">${cards}</div><div class="inline-cta"><a class="btn gold" href="${giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></div>`);
+    const items=Array.isArray(D.barware)?D.barware:[];
+    const cards=items.map(x=>`<article class="item-card">${productVisual(x.icon)}<div class="item-body"><div class="item-type">Barware & Extras</div><div class="item-name">${esc(x.name)}</div><div class="item-sub">${esc(x.variant)}</div><div class="item-price">${esc(x.price)}</div><div class="item-actions"><a class="btn" href="${x.link}" target="_blank" rel="noopener">View Item ${icon('external','icon-sm')}</a></div></div></article>`).join('');
+    const content=items.length
+      ? `<div class="grid">${cards}</div>`
+      : `<div class="empty-state"><h3>Current featured barware has already been claimed</h3><p>The YETI shot glasses are already represented in the basket. For more ideas, open the curated Giftster list.</p></div>`;
+    return pageShell(`${pageIntro('Barware & Extras','Useful additions from the curated list, presented with crisp live type instead of low-resolution screenshots.')}${content}<div class="inline-cta"><a class="btn gold" href="${giftster}" target="_blank" rel="noopener">See Full Curated List</a></div></div>`);
   }
 
   function giftcards(){
