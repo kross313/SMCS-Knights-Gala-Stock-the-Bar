@@ -233,13 +233,13 @@ h3{font-size:24px;line-height:1.15}
   .brand-home{font-size:10px;letter-spacing:.22em}
   .page-pad{padding:24px 18px}
   .hero-logo{padding:22px 14px 10px}
-  
   .hero-logo-art{width:min(100%,570px);padding-left:0}
   .hero-copy{font-size:16px;padding:0 8px;margin-bottom:20px}
   .category-row{gap:8px;padding:0 10px 20px}
   .category-circle{width:68px;height:68px}
   .category-label{font-size:14px}
   .hero-card{margin:0 12px}
+}
 @media (max-width:430px){
   .category-label{font-size:12.5px}
   .category-circle{width:62px;height:62px}
