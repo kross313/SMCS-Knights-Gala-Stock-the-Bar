@@ -131,8 +131,7 @@
       <div class="section-break"></div>
       <section class="section-head"><div class="eyebrow">A Toast to Generosity</div><h2>Our Basket</h2></section>
       <div class="basket-photo"><img src="assets_KVV/basket_hero_KVV.jpg" alt="Stock the Bar basket inspiration"></div>
-      ${progressCard()}
-      <div class="empty-state"><h3>11 contributions and counting</h3><p>$615 committed · $375 received</p></div>
+      <div class="empty-state"><h3>11 contributions and counting</h3><p>$615 committed toward our $1,000 stretch goal</p></div>
       <div class="inline-cta"><a class="btn" href="basket.html">Open Our Basket ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="curated.html">Browse More Items</a></div>
 
       <div class="section-break"></div>
