@@ -98,12 +98,44 @@
   }
 
   function brandVisual(text){ return `<div class="item-visual brand">${esc(text)}</div>`; }
-  function basketVisual(x){
-    if(x.image) return `<img class="item-photo basket-item-photo" src="${esc(x.image)}" alt="${esc(x.name)}">`;
-    if(x.kind==='cash') return `<div class="item-visual basket-cash"><span class="basket-visual-kicker">CASH CONTRIBUTION</span><strong>$${esc(x.value)}</strong><span>Thank You</span></div>`;
-    if(x.kind==='giftcard') return `<div class="item-visual basket-giftcard"><span class="basket-visual-kicker">GIFT CARD</span><strong>${esc(x.name.replace(' Gift Card',''))}</strong><span>$${esc(x.value)}</span></div>`;
-    if(x.kind==='barware') return `<div class="item-visual basket-product"><div class="item-visual"><svg class="product-svg yeti-shot-set-svg" viewBox="0 0 110 110" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="13" y="61" width="84" height="31" rx="8"/><path d="M27 61V47h56v14"/><path d="M45 47v-8h20v8"/><path d="M24 28h13l-2 19H26zM41 28h13l-2 19H43zM58 28h13l-2 19H60zM75 28h13l-2 19H77z"/><path d="M18 76h74"/></svg></div><strong>YETI</strong><span>4 Shot Glasses + Carrying Case</span><span>Riverhead Green</span></div>`;
-    return `<div class="item-visual basket-bottle">${icon('bottle','basket-bottle-icon')}<strong>${esc(x.name)}</strong></div>`;
+  function compactName(name){
+    const map={
+      "Caymus Cabernet Sauvignon":"Caymus",
+      "Don Julio Blanco":"Don Julio Blanco",
+      "Santa Margherita Pinot Grigio":"Santa Margherita",
+      "Woodford Reserve Double Oaked Bourbon Whiskey":"Woodford Double Oaked",
+      "Jameson Triple Triple Whiskey":"Jameson Triple Triple",
+      "Woodford Reserve Bourbon":"Woodford Reserve"
+    };
+    return map[name] || name;
+  }
+
+  function basketBottle(x){
+    if(x.image) return `<div class="basket-object basket-object-bottle basket-object-photo"><img src="${esc(x.image)}" alt="${esc(x.name)}"><span>${esc(compactName(x.name))}</span></div>`;
+    return `<div class="basket-object basket-object-bottle"><div class="bottle-neck"></div><div class="bottle-body"><span>${esc(compactName(x.name))}</span></div></div>`;
+  }
+
+  function basketExtra(x){
+    if(x.kind==='cash') return `<div class="basket-object basket-object-card cash-card"><small>CASH</small><strong>$${esc(x.value)}</strong><span>Contribution</span></div>`;
+    if(x.kind==='giftcard') return `<div class="basket-object basket-object-card gift-card"><small>GIFT CARD</small><strong>Calusa Brewing</strong><span>$${esc(x.value)}</span></div>`;
+    if(x.kind==='barware') return `<div class="basket-object yeti-case"><div class="yeti-glasses"><i></i><i></i><i></i><i></i></div><strong>YETI</strong><span>4 Shot Glasses + Case</span><small>Riverhead Green</small></div>`;
+    return `<div class="basket-object basket-object-card"><strong>${esc(compactName(x.name))}</strong></div>`;
+  }
+
+  function liveBasketVisual(){
+    const items=Array.isArray(D.basketItems)?D.basketItems:[];
+    const bottles=items.filter(x=>x.kind==='bottle');
+    const extras=items.filter(x=>x.kind!=='bottle');
+    return `<section class="actual-basket" aria-label="Current basket containing all 11 contributions">
+      <div class="actual-basket-heading"><div class="eyebrow">CURRENT BASKET</div><h2>11 Contributions and Counting</h2><p>Each contribution below matches the current tracker.</p></div>
+      <div class="actual-basket-stage">
+        <div class="basket-back-row">${bottles.map(basketBottle).join('')}</div>
+        <div class="basket-front-row">${extras.map(basketExtra).join('')}</div>
+        <div class="actual-basket-rim"></div>
+        <div class="actual-basket-body"><span>Stock the Bar</span><small>3RD GRADE · KNIGHTS GALA 2026</small></div>
+      </div>
+      <div class="basket-summary"><strong>$${D.gala.committedValue||0}</strong> committed toward the $${D.gala.goalValue} stretch goal · ${D.gala.received} received · ${D.gala.gifted-D.gala.received} committed</div>
+    </section>`;
   }
 
   function productVisual(kind){
@@ -130,8 +162,7 @@
 
       <div class="section-break"></div>
       <section class="section-head"><div class="eyebrow">A Toast to Generosity</div><h2>Our Basket</h2></section>
-      <div class="basket-photo"><img src="assets_KVV/basket_hero_KVV.jpg" alt="Stock the Bar basket inspiration"></div>
-      <div class="empty-state"><h3>11 contributions and counting</h3><p>$615 committed toward our $1,000 stretch goal</p></div>
+      ${liveBasketVisual()}
       <div class="inline-cta"><a class="btn" href="basket.html">Open Our Basket ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="curated.html">Browse More Items</a></div>
 
       <div class="section-break"></div>
@@ -194,9 +225,7 @@
   }
 
   function basket(){
-    const items = Array.isArray(D.basketItems) ? D.basketItems : [];
-    const basketContent = items.length ? `<section class="live-basket-wrap" aria-label="Current basket donations"><div class="live-basket-heading"><span class="eyebrow">CURRENT BASKET</span><h2>Look What’s Already Inside</h2><p>Every contribution below is represented in the basket.</p></div><div class="live-basket-stage"><div class="basket-items">${items.map((x,i)=>`<article class="basket-piece basket-piece-${i+1} ${String(x.status||'').toLowerCase().includes('received')?'is-received':'is-committed'}">${basketVisual(x)}<div class="basket-piece-copy"><strong>${esc(x.name||'Basket Item')}</strong><span>${esc(x.donor||'3rd Grade Family')} · $${esc(x.value||0)}</span><em>${esc(x.status||'Received')}</em></div></article>`).join('')}</div><div class="basket-rim"></div><div class="basket-body"><span>STOCK THE BAR</span><small>3RD GRADE · KNIGHTS GALA 2026</small></div></div></section>` : `<div class="empty-state"><h3>What’s in the Basket</h3></div>`;
-    return pageShell(`${pageIntro('Our Basket','', 'A Toast to Generosity')}<div class="basket-photo" style="margin-left:0;margin-right:0"><img src="assets_KVV/basket_hero_KVV.jpg" alt="Stock the Bar basket inspiration"></div>${progressCard()}${basketContent}<div class="inline-cta"><a class="btn" href="curated.html">Browse More Items ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="contribute.html">Contribute Any Amount</a></div><div class="gala-card"><img src="assets_KVV/gala_poster_KVV.jpg" alt="Knights Gala — October 24, 2026 at Mote SEA"></div></div>`);
+    return pageShell(`${pageIntro('Our Basket','', 'A Toast to Generosity')}${progressCard()}${liveBasketVisual()}<div class="inline-cta"><a class="btn" href="curated.html">Browse More Items ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="contribute.html">Contribute Any Amount</a></div><div class="gala-card"><img src="assets_KVV/gala_poster_KVV.jpg" alt="Knights Gala — October 24, 2026 at Mote SEA"></div></div>`);
   }
 
   function detail(){
