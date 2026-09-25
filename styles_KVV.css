@@ -215,6 +215,17 @@ h3{font-size:24px;line-height:1.15}
 .center{text-align:center}
 .spacer-sm{height:8px}
 .spacer-md{height:18px}
+
+.basket-item-photo{height:220px;object-fit:contain;background:linear-gradient(145deg,#f5eddf,#fffaf1);padding:16px}
+.basket-cash,.basket-giftcard,.basket-product,.basket-bottle{min-height:190px;gap:8px;align-content:center}
+.basket-cash strong,.basket-giftcard strong{font-family:Georgia,"Times New Roman",serif;font-size:34px;line-height:1.05}
+.basket-cash span:last-child,.basket-giftcard span:last-child,.basket-product span{font-size:14px;color:var(--muted)}
+.basket-visual-kicker{font-size:10px;font-weight:700;letter-spacing:.18em;color:#a2701d}
+.basket-product .item-visual{min-height:0;background:transparent;padding:0}
+.basket-product strong{font-family:Georgia,"Times New Roman",serif;font-size:28px}
+.basket-bottle{padding:18px 22px}
+.basket-bottle-icon{width:58px;height:88px;color:var(--forest)}
+.basket-bottle strong{font-family:Georgia,"Times New Roman",serif;font-size:20px;line-height:1.15}
 @media (max-width:760px){
   body{background:var(--paper)}
   .site-wrap{margin:0 auto;border:0;border-radius:0;box-shadow:none;min-height:100vh}
@@ -240,3 +251,27 @@ h3{font-size:24px;line-height:1.15}
 .item-photo{width:100%;height:190px;object-fit:cover;display:block;background:var(--soft)}
 .bottle-photo{height:220px;object-fit:contain;background:linear-gradient(145deg,#f5eddf,#fffaf1);padding:16px}
 .detail-brand-hero{min-height:250px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(145deg,#f5eddf,#fffaf1);display:grid;place-items:center;text-align:center;padding:28px;font-family:Georgia,"Times New Roman",serif;font-size:42px;color:var(--forest);margin-bottom:20px}
+
+/* Live basket visualization — uses the existing site palette/type system. */
+.live-basket-wrap{margin:28px 0 34px}
+.live-basket-heading{text-align:center;margin:0 auto 20px;max-width:640px}
+.live-basket-heading h2{margin:4px 0 6px;font-family:Georgia,"Times New Roman",serif;font-size:30px;color:var(--forest)}
+.live-basket-heading p{margin:0;color:var(--muted)}
+.live-basket-stage{position:relative;min-height:760px;padding:28px 22px 190px;border:1px solid #e8dfcf;border-radius:26px;background:linear-gradient(180deg,#fbf8f1 0%,#f6efe3 100%);overflow:hidden}
+.basket-items{position:relative;z-index:2;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:center;gap:12px;max-width:920px;margin:0 auto}
+.basket-piece{position:relative;width:150px;min-height:245px;padding:9px 9px 12px;background:#fff;border:1px solid #e6ddcf;border-radius:16px;box-shadow:0 8px 22px rgba(54,47,36,.08);transform:rotate(var(--tilt,0deg));display:flex;flex-direction:column}
+.basket-piece:nth-child(4n+1){--tilt:-2deg}.basket-piece:nth-child(4n+2){--tilt:1.5deg}.basket-piece:nth-child(4n+3){--tilt:-1deg}.basket-piece:nth-child(4n){--tilt:2deg}
+.basket-piece .item-photo,.basket-piece .item-visual{height:130px;min-height:130px;border-radius:11px;margin:0 0 8px;object-fit:contain;background:#faf7f0}
+.basket-piece .basket-bottle{padding:10px 8px;justify-content:center}.basket-piece .basket-bottle strong{font-size:12px;line-height:1.2}
+.basket-piece .basket-cash strong,.basket-piece .basket-giftcard strong{font-size:23px}
+.basket-piece-copy{display:flex;flex:1;flex-direction:column;gap:3px;text-align:center}
+.basket-piece-copy strong{font-family:Georgia,"Times New Roman",serif;font-size:13px;line-height:1.2;color:var(--forest)}
+.basket-piece-copy span{font-size:10px;line-height:1.25;color:var(--muted)}
+.basket-piece-copy em{margin-top:auto;align-self:center;padding:3px 8px;border-radius:999px;background:#e7f0eb;color:var(--forest);font-style:normal;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.basket-piece.is-committed .basket-piece-copy em{background:#f1e5cc;color:#725d2c}
+.basket-rim{position:absolute;z-index:4;left:8%;right:8%;bottom:150px;height:38px;border-radius:18px;background:linear-gradient(180deg,#c99553,#9d6d35);box-shadow:0 5px 12px rgba(77,51,25,.18)}
+.basket-body{position:absolute;z-index:3;left:11%;right:11%;bottom:22px;height:145px;padding-top:46px;text-align:center;border-radius:12px 12px 42px 42px;background:repeating-linear-gradient(90deg,#c89657 0,#c89657 10px,#b77f43 10px,#b77f43 18px);box-shadow:inset 0 0 0 2px rgba(112,72,33,.18),0 12px 24px rgba(71,51,30,.12);color:#fff8e9}
+.basket-body:before{content:"";position:absolute;left:15%;right:15%;top:-92px;height:130px;border:14px solid #a8753f;border-bottom:0;border-radius:90px 90px 0 0;opacity:.8}
+.basket-body span{position:relative;z-index:2;font-family:Georgia,"Times New Roman",serif;font-size:24px;font-weight:700;letter-spacing:.06em}
+.basket-body small{position:relative;z-index:2;display:block;margin-top:5px;font-size:10px;letter-spacing:.14em}
+@media(max-width:700px){.live-basket-stage{min-height:1020px;padding:20px 10px 180px}.basket-items{gap:8px}.basket-piece{width:calc(33.333% - 8px);min-width:92px;min-height:205px;padding:6px}.basket-piece .item-photo,.basket-piece .item-visual{height:100px;min-height:100px}.basket-piece-copy strong{font-size:11px}.basket-piece-copy span{font-size:9px}.basket-rim{left:4%;right:4%;bottom:142px}.basket-body{left:7%;right:7%;height:135px}.basket-body span{font-size:20px}}

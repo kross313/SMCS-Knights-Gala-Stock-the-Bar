@@ -5,7 +5,7 @@
 
   const esc = s => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const giftster = D.giftsterUrl;
-  const pct = D.gala.goalItems ? Math.round((D.gala.gifted / D.gala.goalItems)*100) : 0;
+  const pct = D.gala.goalValue ? Math.min(100, Math.round(((D.gala.committedValue||0) / D.gala.goalValue)*100)) : 0;
 
   function icon(name, cls='icon'){
     const common=`class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
@@ -50,8 +50,8 @@
         <div class="progress-percent">${pct}%</div>
       </div>
       <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
-      <div class="progress-meta"><span>${D.gala.gifted} of ${D.gala.goalItems} items gifted</span><span>${D.gala.received} received</span></div>
-      <p class="progress-note">${D.gala.gifted===0 && D.gala.received===0 ? 'Nothing has been purchased or received yet.' : 'Thank you — the basket is growing.'} Each grade is asked to create a basket valued at <strong>$${D.gala.goalValue} or more</strong>.</p>
+      <div class="progress-meta"><span><strong>$${D.gala.committedValue||0}</strong> committed toward $${D.gala.goalValue} stretch goal</span><span><strong>$${D.gala.receivedValue||0}</strong> received</span></div>
+      <p class="progress-note"><strong>Original $${D.gala.originalGoalValue||500} goal reached in 24 hours!</strong> We’re now working toward a <strong>$${D.gala.goalValue} stretch goal</strong>. ${D.gala.gifted} contributions are in the basket — ${D.gala.received} received and ${D.gala.gifted-D.gala.received} committed.</p>
     </section>`;
   }
 
@@ -98,6 +98,13 @@
   }
 
   function brandVisual(text){ return `<div class="item-visual brand">${esc(text)}</div>`; }
+  function basketVisual(x){
+    if(x.image) return `<img class="item-photo basket-item-photo" src="${esc(x.image)}" alt="${esc(x.name)}">`;
+    if(x.kind==='cash') return `<div class="item-visual basket-cash"><span class="basket-visual-kicker">CASH CONTRIBUTION</span><strong>$${esc(x.value)}</strong><span>Thank You</span></div>`;
+    if(x.kind==='giftcard') return `<div class="item-visual basket-giftcard"><span class="basket-visual-kicker">GIFT CARD</span><strong>${esc(x.name.replace(' Gift Card',''))}</strong><span>$${esc(x.value)}</span></div>`;
+    if(x.kind==='barware') return `<div class="item-visual basket-product"><div class="item-visual"><svg class="product-svg yeti-shot-set-svg" viewBox="0 0 110 110" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="13" y="61" width="84" height="31" rx="8"/><path d="M27 61V47h56v14"/><path d="M45 47v-8h20v8"/><path d="M24 28h13l-2 19H26zM41 28h13l-2 19H43zM58 28h13l-2 19H60zM75 28h13l-2 19H77z"/><path d="M18 76h74"/></svg></div><strong>YETI</strong><span>4 Shot Glasses + Carrying Case</span><span>Riverhead Green</span></div>`;
+    return `<div class="item-visual basket-bottle">${icon('bottle','basket-bottle-icon')}<strong>${esc(x.name)}</strong></div>`;
+  }
 
   function productVisual(kind){
     let body='';
@@ -125,7 +132,7 @@
       <section class="section-head"><div class="eyebrow">A Toast to Generosity</div><h2>Our Basket</h2></section>
       <div class="basket-photo"><img src="assets_KVV/basket_hero_KVV.jpg" alt="Stock the Bar basket inspiration"></div>
       ${progressCard()}
-      <div class="empty-state"><h3>Nothing in the basket yet</h3></div>
+      <div class="empty-state"><h3>11 contributions and counting</h3><p>$615 committed · $375 received</p></div>
       <div class="inline-cta"><a class="btn" href="basket.html">Open Our Basket ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="curated.html">Browse More Items</a></div>
 
       <div class="section-break"></div>
@@ -172,7 +179,7 @@
 
   function contribute(){
     const k=D.contacts.kelly;
-    return pageShell(`${pageIntro('Contribute Any Amount','Every contribution helps us reach the $500+ basket goal.')}<div class="goal-band">Basket goal: <strong>$${D.gala.goalValue}+</strong> · Contributions due ${D.gala.deadline}</div><div class="spacer-md"></div><div class="payment-grid">
+    return pageShell(`${pageIntro('Contribute Any Amount','Every contribution helps us reach the $1,000 stretch goal.')}<div class="goal-band">Basket goal: <strong>$${D.gala.goalValue}+</strong> · Contributions due ${D.gala.deadline}</div><div class="spacer-md"></div><div class="payment-grid">
       <div class="payment-card"><h3>Venmo</h3><p>${esc(k.venmo)}</p><a class="btn full" href="https://venmo.com/u/Kelly-VANVLEET" target="_blank" rel="noopener">Open Venmo</a></div>
       <div class="payment-card"><h3>Zelle</h3><p>${esc(k.phone)}<br>${esc(k.email)}</p><a class="btn full" href="mailto:${k.email}?subject=${encodeURIComponent('3rd Grade Stock the Bar — Zelle Contribution')}">Email Kelly</a></div>
       <div class="payment-card"><h3>Apple Cash</h3><p>${esc(k.phone)}</p><a class="btn full" href="sms:${k.phone.replace(/\D/g,'')}?body=${encodeURIComponent('3rd Grade Stock the Bar contribution')}">Message Kelly</a></div>
@@ -189,7 +196,7 @@
 
   function basket(){
     const items = Array.isArray(D.basketItems) ? D.basketItems : [];
-    const basketContent = items.length ? `<div class="grid">${items.map(x=>`<article class="item-card">${brandVisual(x.name||'Basket Item')}<div class="item-body"><div class="item-type">${esc(x.status||'Received')}</div><div class="item-name">${esc(x.name||'Basket Item')}</div><div class="item-sub">${esc(x.note||'Confirmed contribution')}</div></div></article>`).join('')}</div>` : `<div class="empty-state"><h3>What’s in the Basket</h3></div>`;
+    const basketContent = items.length ? `<section class="live-basket-wrap" aria-label="Current basket donations"><div class="live-basket-heading"><span class="eyebrow">CURRENT BASKET</span><h2>Look What’s Already Inside</h2><p>Every contribution below is represented in the basket.</p></div><div class="live-basket-stage"><div class="basket-items">${items.map((x,i)=>`<article class="basket-piece basket-piece-${i+1} ${String(x.status||'').toLowerCase().includes('received')?'is-received':'is-committed'}">${basketVisual(x)}<div class="basket-piece-copy"><strong>${esc(x.name||'Basket Item')}</strong><span>${esc(x.donor||'3rd Grade Family')} · $${esc(x.value||0)}</span><em>${esc(x.status||'Received')}</em></div></article>`).join('')}</div><div class="basket-rim"></div><div class="basket-body"><span>STOCK THE BAR</span><small>3RD GRADE · KNIGHTS GALA 2026</small></div></div></section>` : `<div class="empty-state"><h3>What’s in the Basket</h3></div>`;
     return pageShell(`${pageIntro('Our Basket','', 'A Toast to Generosity')}<div class="basket-photo" style="margin-left:0;margin-right:0"><img src="assets_KVV/basket_hero_KVV.jpg" alt="Stock the Bar basket inspiration"></div>${progressCard()}${basketContent}<div class="inline-cta"><a class="btn" href="curated.html">Browse More Items ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="contribute.html">Contribute Any Amount</a></div><div class="gala-card"><img src="assets_KVV/gala_poster_KVV.jpg" alt="Knights Gala — October 24, 2026 at Mote SEA"></div></div>`);
   }
 

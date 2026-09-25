@@ -4,10 +4,13 @@ window.STB_DATA = {
     date: "October 24, 2026",
     location: "Mote SEA",
     deadline: "October 13, 2026",
-    goalValue: 500,
+    goalValue: 1000,
+    originalGoalValue: 500,
     goalItems: 40,
-    gifted: 0,
-    received: 0
+    gifted: 11,
+    received: 7,
+    committedValue: 615,
+    receivedValue: 375
   },
   contacts: {
     kelly: {name:"Kelly Van Vleet", email:"kellyross412@gmail.com", phone:"941-278-9118", venmo:"@Kelly-VANVLEET"},
@@ -43,5 +46,17 @@ window.STB_DATA = {
     {name:"Siesta Key Wine Bar", sub:"Gift Card"},
     {name:"Oak & Stone", sub:"Gift Card"}
   ],
-  basketItems: []
+  basketItems: [
+    {name:"Caymus Cabernet Sauvignon", donor:"Nicole O’Malley", value:85, status:"Committed", kind:"bottle", image:"assets_KVV/caymus_KVV.jpg"},
+    {name:"Don Julio Blanco", donor:"Elyse Manzer", value:55, status:"Committed", kind:"bottle"},
+    {name:"YETI Shot Glasses with Carrying Case", donor:"Elyse Manzer", value:60, status:"Committed", kind:"barware"},
+    {name:"Calusa Brewing Gift Card", donor:"Molly Otte", value:50, status:"Received", kind:"giftcard"},
+    {name:"Cash Contribution", donor:"Gabrielle Boodoo / Emma Boodoo family", value:50, status:"Received", kind:"cash"},
+    {name:"Santa Margherita Pinot Grigio", donor:"Lindsey Masters", value:25, status:"Received", kind:"bottle"},
+    {name:"Woodford Reserve Double Oaked Bourbon Whiskey", donor:"Lindsey Masters", value:60, status:"Received", kind:"bottle"},
+    {name:"Jameson Triple Triple Whiskey", donor:"Lindsey Masters", value:40, status:"Received", kind:"bottle"},
+    {name:"Cash Contribution", donor:"Josh Lowenstein / Lowenstein family", value:50, status:"Received", kind:"cash"},
+    {name:"Cash Contribution", donor:"Lindsay Nappo", value:100, status:"Received", kind:"cash"},
+    {name:"Woodford Reserve Bourbon", donor:"Erin Liddy", value:40, status:"Committed", kind:"bottle"}
+  ]
 };
