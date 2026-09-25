@@ -35,8 +35,7 @@ window.STB_DATA = {
     {id:"yeti-wine-tumbler", name:"YETI Rambler 10 oz Wine Tumbler", variant:"Pampa Green", price:"$30", link:"https://www.yeti.com/drinkware/barware/wine-tumbler-10oz.html", icon:"tumbler"},
     {id:"yeti-wine-chiller", name:"YETI Rambler Wine Chiller", variant:"Pampa Green", price:"$75", link:"https://www.yeti.com/drinkware/barware/wine-chiller.html", icon:"chiller"},
     {id:"yeti-stackable", name:"YETI Rambler 4 oz Stackable Cups (2-pack)", variant:"Pampa Green", price:"$30", link:"https://www.yeti.com/drinkware/coffee-tea/21071508248.html", icon:"cups"},
-    {id:"yeti-shaker", name:"YETI Rambler 20 oz Cocktail Shaker", variant:"Pampa Green", price:"$65", link:"https://www.yeti.com/drinkware/barware/cocktail-shaker-20oz.html", icon:"shaker"},
-    {id:"yeti-shots", name:"YETI Shot Glasses with Carrying Case", variant:"Riverhead Green", price:"$60", link:"https://www.yeti.com/drinkware/barware/yeti-shot-glasses.html", icon:"cups"}
+    {id:"yeti-shaker", name:"YETI Rambler 20 oz Cocktail Shaker", variant:"Pampa Green", price:"$65", link:"https://www.yeti.com/drinkware/barware/cocktail-shaker-20oz.html", icon:"shaker"}
   ],
   giftCards: [
     {name:"Cooper’s Hawk", sub:"Gift Card / Membership"},
