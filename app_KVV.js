@@ -138,7 +138,7 @@
     const items=Array.isArray(D.basketItems)?D.basketItems:[];
     const itemGrid=showItems ? `<div class="contribution-grid">${items.map(contributionCard).join('')}</div>` : '';
     return `<section class="basket-showcase" aria-label="Current basket with 11 contributions">
-      <div class="basket-photo basket-photo-current"><img src="assets_KVV/basket_hero_KVV.jpg?v=20260925-0955" alt="Current Stock the Bar basket"></div>
+      <div class="basket-photo basket-photo-current"><img src="assets_KVV/basket_hero_KVV.jpg?v=20260925-1016" alt="Current Stock the Bar basket"></div>
       <div class="basket-showcase-summary"><h3>${D.gala.gifted} contributions and counting</h3><p><strong>$${money(D.gala.committedValue)}</strong> committed toward our $${money(D.gala.goalValue)} stretch goal · ${D.gala.received} received · ${D.gala.gifted-D.gala.received} committed.</p></div>
       ${itemGrid}
     </section>`;
