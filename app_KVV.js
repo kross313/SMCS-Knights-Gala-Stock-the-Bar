@@ -50,8 +50,8 @@
         <div class="progress-percent">${pct}%</div>
       </div>
       <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
-      <div class="progress-meta"><span><strong>$${D.gala.committedValue||0}</strong> committed toward $${D.gala.goalValue} stretch goal</span><span><strong>$${D.gala.receivedValue||0}</strong> received</span></div>
-      <p class="progress-note"><strong>Original $${D.gala.originalGoalValue||500} goal reached in 24 hours!</strong> We’re now working toward a <strong>$${D.gala.goalValue} stretch goal</strong>. ${D.gala.gifted} contributions are in the basket — ${D.gala.received} received and ${D.gala.gifted-D.gala.received} committed.</p>
+      <div class="progress-meta"><span><strong>$${D.gala.committedValue||0}</strong> committed toward $${D.gala.goalValue} stretch goal</span><span><strong>${D.gala.gifted}</strong> total contributions</span></div>
+      <p class="progress-note"><strong>Original $${D.gala.originalGoalValue||500} goal reached in 24 hours!</strong> We’re now working toward a <strong>$${D.gala.goalValue} stretch goal</strong>. ${D.gala.received} contributions received · ${D.gala.gifted-D.gala.received} committed.</p>
     </section>`;
   }
 
