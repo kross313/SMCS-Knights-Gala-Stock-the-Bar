@@ -6,6 +6,7 @@
   const esc = s => String(s ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
   const giftster = D.giftsterUrl;
   const pct = D.gala.goalValue ? Math.min(100, Math.round(((D.gala.committedValue||0) / D.gala.goalValue)*100)) : 0;
+  const money = n => Number(n||0).toLocaleString('en-US');
 
   function icon(name, cls='icon'){
     const common=`class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"`;
@@ -50,8 +51,8 @@
         <div class="progress-percent">${pct}%</div>
       </div>
       <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
-      <div class="progress-meta"><span><strong>$${D.gala.committedValue||0}</strong> committed toward $${D.gala.goalValue} stretch goal</span><span><strong>${D.gala.gifted}</strong> total contributions</span></div>
-      <p class="progress-note"><strong>Original $${D.gala.originalGoalValue||500} goal reached in 24 hours!</strong> We’re now working toward a <strong>$${D.gala.goalValue} stretch goal</strong>. ${D.gala.received} contributions received · ${D.gala.gifted-D.gala.received} committed.</p>
+      <div class="progress-meta"><span><strong>$${money(D.gala.committedValue)}</strong> committed toward $${money(D.gala.goalValue)} stretch goal</span><span><strong>${D.gala.gifted}</strong> total contributions</span></div>
+      <p class="progress-note"><strong>Original $${money(D.gala.originalGoalValue||500)} goal reached in 24 hours!</strong> We’re now working toward a <strong>$${money(D.gala.goalValue)} stretch goal</strong>. ${D.gala.received} contributions received · ${D.gala.gifted-D.gala.received} committed.</p>
     </section>`;
   }
 
@@ -122,19 +123,24 @@
     return `<div class="basket-object basket-object-card"><strong>${esc(compactName(x.name))}</strong></div>`;
   }
 
-  function liveBasketVisual(){
+  function contributionCard(x){
+    const kindLabel={bottle:'Bottle',barware:'Barware',giftcard:'Gift Card',cash:'Cash'}[x.kind] || 'Contribution';
+    const amount=x.kind==='cash' || x.kind==='giftcard' ? `<span class="contribution-value">$${money(x.value)}</span>` : `<span class="contribution-value">Approx. $${money(x.value)}</span>`;
+    return `<article class="contribution-card">
+      <div class="contribution-kind">${esc(kindLabel)}</div>
+      <strong>${esc(x.name)}</strong>
+      ${amount}
+      <span class="contribution-status ${String(x.status||'').toLowerCase().includes('received')?'received':'committed'}">${esc(x.status)}</span>
+    </article>`;
+  }
+
+  function basketShowcase(showItems=false){
     const items=Array.isArray(D.basketItems)?D.basketItems:[];
-    const bottles=items.filter(x=>x.kind==='bottle');
-    const extras=items.filter(x=>x.kind!=='bottle');
-    return `<section class="actual-basket" aria-label="Current basket containing all 11 contributions">
-      <div class="actual-basket-heading"><div class="eyebrow">CURRENT BASKET</div><h2>11 Contributions and Counting</h2><p>Each contribution below matches the current tracker.</p></div>
-      <div class="actual-basket-stage">
-        <div class="basket-back-row">${bottles.map(basketBottle).join('')}</div>
-        <div class="basket-front-row">${extras.map(basketExtra).join('')}</div>
-        <div class="actual-basket-rim"></div>
-        <div class="actual-basket-body"><span>Stock the Bar</span><small>3RD GRADE · KNIGHTS GALA 2026</small></div>
-      </div>
-      <div class="basket-summary"><strong>$${D.gala.committedValue||0}</strong> committed toward the $${D.gala.goalValue} stretch goal · ${D.gala.received} received · ${D.gala.gifted-D.gala.received} committed</div>
+    const itemGrid=showItems ? `<div class="contribution-grid">${items.map(contributionCard).join('')}</div>` : '';
+    return `<section class="basket-showcase" aria-label="Current basket with 11 contributions">
+      <div class="basket-photo basket-photo-current"><img src="assets_KVV/basket_hero_KVV.jpg?v=20260925-0955" alt="Current Stock the Bar basket"></div>
+      <div class="basket-showcase-summary"><h3>${D.gala.gifted} contributions and counting</h3><p><strong>$${money(D.gala.committedValue)}</strong> committed toward our $${money(D.gala.goalValue)} stretch goal · ${D.gala.received} received · ${D.gala.gifted-D.gala.received} committed.</p></div>
+      ${itemGrid}
     </section>`;
   }
 
@@ -162,7 +168,7 @@
 
       <div class="section-break"></div>
       <section class="section-head"><div class="eyebrow">A Toast to Generosity</div><h2>Our Basket</h2></section>
-      ${liveBasketVisual()}
+      ${basketShowcase(false)}
       <div class="inline-cta"><a class="btn" href="basket.html">Open Our Basket ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="curated.html">Browse More Items</a></div>
 
       <div class="section-break"></div>
@@ -229,7 +235,7 @@
   }
 
   function basket(){
-    return pageShell(`${pageIntro('Our Basket','', 'A Toast to Generosity')}${progressCard()}${liveBasketVisual()}<div class="inline-cta"><a class="btn" href="curated.html">Browse More Items ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="contribute.html">Contribute Any Amount</a></div><div class="gala-card"><img src="assets_KVV/gala_poster_KVV.jpg" alt="Knights Gala — October 24, 2026 at Mote SEA"></div></div>`);
+    return pageShell(`${pageIntro('Our Basket','', 'A Toast to Generosity')}${progressCard()}${basketShowcase(true)}<div class="inline-cta"><a class="btn" href="curated.html">Browse More Items ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="contribute.html">Contribute Any Amount</a></div><div class="gala-card"><img src="assets_KVV/gala_poster_KVV.jpg" alt="Knights Gala — October 24, 2026 at Mote SEA"></div></div>`);
   }
 
   function detail(){

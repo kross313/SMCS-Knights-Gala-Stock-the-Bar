@@ -305,3 +305,27 @@ h3{font-size:24px;line-height:1.15}
 .actual-basket-body span{font-family:Georgia,"Times New Roman",serif;font-size:34px;font-style:italic}.actual-basket-body small{margin-top:5px;font-size:10px;letter-spacing:.16em;color:#f0d79b}
 .basket-summary{text-align:center;margin-top:12px;color:var(--muted);font-size:14px}
 @media(max-width:760px){.actual-basket{margin-left:0;margin-right:0}.actual-basket-stage{min-height:525px;padding-left:8px;padding-right:8px}.basket-back-row{height:300px;transform:scale(.82);transform-origin:center bottom}.basket-front-row{left:2%;right:2%;gap:5px;bottom:110px;transform:scale(.78);transform-origin:center bottom}.actual-basket-body{left:4%;right:4%;height:105px}.actual-basket-body span{font-size:28px}.actual-basket-rim{bottom:108px}}
+
+
+/* Stable current basket showcase */
+.basket-showcase{margin:0 18px 30px}
+.basket-photo-current{margin:0;border:1px solid var(--line);background:#f6efe4;box-shadow:0 8px 22px rgba(54,47,36,.08)}
+.basket-photo-current img{width:100%;height:auto;aspect-ratio:auto;object-fit:contain;object-position:center;background:#f6efe4}
+.basket-showcase-summary{margin:14px 0 0;padding:20px 22px;border:1px solid var(--line);border-radius:16px;background:#fff;text-align:center}
+.basket-showcase-summary h3{font-size:25px;margin:0 0 6px}
+.basket-showcase-summary p{margin:0;color:var(--muted);font-size:14px}
+.basket-showcase-summary strong{color:var(--forest)}
+.contribution-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+.contribution-card{position:relative;min-width:0;padding:15px 16px 14px;border:1px solid var(--line);border-radius:14px;background:#fff;display:flex;flex-direction:column;gap:5px}
+.contribution-kind{text-transform:uppercase;letter-spacing:.15em;color:#9b7229;font-size:9px;font-weight:800}
+.contribution-card strong{font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:1.18;color:var(--ink)}
+.contribution-value{font-size:12px;color:var(--muted)}
+.contribution-status{align-self:flex-start;margin-top:3px;padding:4px 8px;border-radius:999px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.contribution-status.received{background:#e7f0eb;color:var(--forest)}
+.contribution-status.committed{background:#f1e5cc;color:#725d2c}
+@media(max-width:760px){
+  .basket-showcase{margin-left:12px;margin-right:12px}
+  .basket-showcase-summary{padding:18px}
+  .contribution-grid{grid-template-columns:1fr}
+  .contribution-card{padding:14px}
+}
