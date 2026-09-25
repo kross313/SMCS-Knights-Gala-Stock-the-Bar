@@ -1,0 +1,15 @@
+FINAL QA — SMCS Stock the Bar
+
+PASS
+- JavaScript syntax validated for app_KVV.js and data_KVV.js.
+- All 10 page renderers execute without runtime errors in static QA harness.
+- All referenced local pages and assets exist.
+- Home hero has one invisible full-card click target using the exact Giftster URL:
+  https://www.giftster.com/gift/public/ZXddN/
+- No second visible CTA is rendered over the CTA already built into the hero graphic.
+- Logo uses the clean approved logo crop with the full S flourish; top-corner device/menu marks are masked in CSS.
+- Bottles page uses 4 real bottle image cards from the approved visual reference.
+- Launch state remains 0 gifted / 0 received.
+- Room Mom Gmail/contact section remains present.
+- Internal/designer explanatory copy flagged by Kelly has been removed.
+- ZIP integrity verified after creation.

@@ -1,7 +1,9 @@
-FINAL CORRECTION QA
-- Removed entire duplicate top site header row from every page.
-- Removed Home icon, duplicate ST. MARTHA CATHOLIC SCHOOL header text, and heart icon with that row.
-- Removed both overlaid CTA/text layers from the Good Drinks hero image; image now has no site-added button overlay.
-- Cropped the visible logo-lockup edges so the two baked-in corner marks are outside the displayed logo area.
-- Basket Progress and the action tiles below remain in place.
-- Contact / Gmail section remains in place.
+FINAL QA CORRECTIONS
+- Fixed JavaScript syntax error in pageIntro().
+- Removed the duplicate visible Giftster CTA from the hero.
+- Added an invisible full-card click target over the hero graphic using the exact Giftster URL.
+- Removed internal/designer explanatory copy under Our Basket, Individual Item Detail, and the featured Cooper’s Hawk block.
+- Preserved 0% / 0 gifted / 0 received launch state.
+- Preserved Room Mom contact/Gmail section.
+- Preserved real bottle image cards from the approved visual reference.
+- Confirmed logo asset includes left-side breathing room so the S flourish is not CSS-clipped.

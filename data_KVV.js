@@ -15,17 +15,16 @@ window.STB_DATA = {
     huston: {name:"Kelly Huston", email:"kellylpower@yahoo.com", phone:"443-497-3105"}
   },
   bottles: [
-    {id:"caymus", name:"Caymus Cabernet Sauvignon", type:"Red Wine", note:"Specific bottle selection from the Room Mom master list."},
-    {id:"veuve", name:"Veuve Clicquot Yellow Label Brut", type:"Champagne", note:"Specific bottle selection from the Room Mom master list."},
-    {id:"santa-margherita", name:"Santa Margherita Pinot Grigio", type:"White Wine", note:"Specific bottle selection from the Room Mom master list."},
-    {id:"woodford", name:"Woodford Reserve Double Oaked", type:"Bourbon / Whiskey", note:"Specific bottle selection from the Room Mom master list."},
-    {id:"don-julio", name:"Don Julio Blanco", type:"Tequila", note:"Specific bottle selection from the Room Mom master list."}
+    {id:"caymus", name:"Caymus Cabernet Sauvignon", type:"Red Wine", note:"Specific bottle selection from the Room Mom master list.", image:"assets_KVV/caymus_KVV.jpg"},
+    {id:"veuve", name:"Veuve Clicquot Yellow Label Brut", type:"Champagne", note:"Specific bottle selection from the Room Mom master list.", image:"assets_KVV/veuve_KVV.jpg"},
+    {id:"casamigos", name:"Casamigos Tequila", type:"Tequila", note:"Specific bottle selection from the Room Mom master list.", image:"assets_KVV/casamigos_KVV.jpg"},
+    {id:"titos", name:"Tito’s Handmade Vodka", type:"Vodka", note:"Specific bottle selection from the Room Mom master list.", image:"assets_KVV/titos_KVV.jpg"}
   ],
   experiences: [
-    {id:"coopers-hawk", name:"Cooper’s Hawk", title:"Wine Club Gift Membership", eyebrow:"Experience & Membership", desc:"A polished featured experience from the 3rd Grade curated list, presented in the same premium detail-page style as the approved design.", features:["Gift membership options","Member benefits","A memorable local experience","Easy to claim through Giftster"], hero:"assets_KVV/coopers_hawk_hero_KVV.jpg"},
-    {id:"michaels", name:"Michael’s Wine Cellar", title:"Events & Experiences", eyebrow:"Experience", desc:"A Sarasota favorite with special events and an elevated local experience.", features:["Local Sarasota option","Special events","Strong auction appeal","Claim through Giftster"]},
-    {id:"sarasota-wine", name:"Sarasota Wine Co.", title:"Events & Experiences", eyebrow:"Experience", desc:"A local experience option selected from the Room Mom master list.", features:["Local business","Events","Gift-friendly option","Claim through Giftster"]},
-    {id:"fine-wine", name:"Fine Wine & Tastings on Main", title:"Tasting Experience", eyebrow:"Experience", desc:"A polished downtown experience option for the Gala package.", features:["Local business","Experience-focused","Gift-friendly","Claim through Giftster"]},
+    {id:"coopers-hawk", name:"Cooper’s Hawk", title:"Wine Club Gift Membership", eyebrow:"Experience & Membership", desc:"A featured experience for the 3rd Grade basket.", features:["Gift membership options","Member benefits","A memorable local experience","Easy to claim through Giftster"], hero:"assets_KVV/coopers_hawk_hero_KVV.jpg"},
+    {id:"michaels", name:"Michael’s Wine Cellar", title:"Events & Experiences", eyebrow:"Experience", desc:"A Sarasota favorite with special events.", features:["Local Sarasota option","Special events","Strong auction appeal","Claim through Giftster"]},
+    {id:"sarasota-wine", name:"Sarasota Wine Co.", title:"Events & Experiences", eyebrow:"Experience", desc:"A local experience option from the Room Mom master list.", features:["Local business","Events","Gift-friendly option","Claim through Giftster"]},
+    {id:"fine-wine", name:"Fine Wine & Tastings on Main", title:"Tasting Experience", eyebrow:"Experience", desc:"A downtown tasting experience for the Gala package.", features:["Local business","Experience-focused","Gift-friendly","Claim through Giftster"]},
     {id:"fiorelli", name:"Fiorelli Winery & Vineyard", title:"Winery Experience", eyebrow:"Experience", desc:"A local vineyard experience represented on the master list.", features:["Local destination","Experience option","Gift-friendly","Claim through Giftster"]},
     {id:"loaded-cannon", name:"Loaded Cannon Spirits", title:"Classes & Experience", eyebrow:"Experience", desc:"A local experience option from the Room Mom master list.", features:["Local business","Class-based experience","Gift-friendly","Claim through Giftster"]}
   ],

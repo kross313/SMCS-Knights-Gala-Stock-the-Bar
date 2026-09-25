@@ -116,38 +116,39 @@
       <section class="hero-logo"><div class="hero-logo-art"><img src="assets_KVV/logo_lockup_KVV.png" alt="Stock the Bar — Gala 2026"></div></section>
       <p class="hero-copy">Help us stock the bar for an unforgettable night! Choose an item, contribute toward it, or donate something similar. Every gift helps make the evening a success — and supports our students!</p>
       ${categoryRow()}
-      <section class="hero-card"><img src="assets_KVV/hero_good_drinks_KVV.jpg" alt="Good Drinks. Brighter Futures."><a class="hero-hit" href="${giftster}" target="_blank" rel="noopener" aria-label="Browse our curated Giftster list">Browse our curated Giftster list</a></section>
+      <section class="hero-card"><img src="assets_KVV/hero_good_drinks_KVV.jpg" alt="Good Drinks. Brighter Futures."><a class="hero-hit" href="${giftster}" target="_blank" rel="noopener noreferrer" aria-label="Browse our curated Giftster list"></a></section>
       ${progressCard()}
       ${actionRow()}
       <div class="tagline">Same Spirits. Brighter Tomorrows.</div>
 
       <div class="section-break"></div>
-      <section class="section-head"><div class="eyebrow">A Toast to Generosity</div><h2>Our Basket</h2><p class="section-sub">Track the 3rd Grade package as contributions come in. The launch state is intentionally empty and accurate.</p></section>
+      <section class="section-head"><div class="eyebrow">A Toast to Generosity</div><h2>Our Basket</h2></section>
       <div class="basket-photo"><img src="assets_KVV/basket_hero_KVV.jpg" alt="Stock the Bar basket inspiration"></div>
       ${progressCard()}
-      <div class="empty-state"><h3>Nothing in the basket yet</h3><p>Be the first to claim an item, contribute any amount, or donate something similar.</p></div>
+      <div class="empty-state"><h3>Nothing in the basket yet</h3></div>
       <div class="inline-cta"><a class="btn" href="basket.html">Open Our Basket ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="curated.html">Browse More Items</a></div>
 
       <div class="section-break"></div>
-      <section class="section-head"><div class="eyebrow">Featured Experience</div><h2>Individual Item Detail</h2><p class="section-sub">Featured items open into the polished detail-page treatment from the approved design.</p></section>
+      <section class="section-head"><div class="eyebrow">Featured Experience</div><h2>Individual Item Detail</h2></section>
       <article class="feature-panel">
         <img src="${featured.hero}" alt="Cooper's Hawk featured experience">
-        <div class="feature-content"><div class="eyebrow">${esc(featured.eyebrow)}</div><h2 class="feature-title">${esc(featured.name)}<br>${esc(featured.title)}</h2><p class="feature-copy">${esc(featured.desc)}</p>
+        <div class="feature-content"><div class="eyebrow">${esc(featured.eyebrow)}</div><h2 class="feature-title">${esc(featured.name)}<br>${esc(featured.title)}</h2>
         <div class="detail-actions"><a class="btn" href="detail.html?id=${featured.id}">View Featured Detail ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="${giftster}" target="_blank" rel="noopener">Claim on Giftster ${icon('external','icon-sm')}</a></div></div>
       </article>`);
   }
 
   function pageIntro(title, subtitle, eyebrow='3rd Grade · Knights Gala'){
-    return `<div class="page-pad"><a class="page-back" href="index.html">${icon('back','icon-sm')} Back to Home</a><div class="eyebrow">${eyebrow}</div><h1 class="page-title">${title}</h1><p class="page-intro">${subtitle}</p>`;
+    const intro = subtitle ? `<p class=\"page-intro\">${subtitle}</p>` : '';
+    return `<div class=\"page-pad\"><a class=\"page-back\" href=\"index.html\">${icon('back','icon-sm')} Back to Home</a><div class=\"eyebrow\">${eyebrow}</div><h1 class=\"page-title\">${title}</h1>${intro}`;
   }
 
   function bottles(){
     const cards=D.bottles.map(x=>`<article class="item-card">
-      <div class="item-visual">${icon('bottle','icon-lg')}</div>
+      ${x.image?`<img class="item-photo bottle-photo" src="${x.image}" alt="${esc(x.name)}">`:`<div class="item-visual">${icon('bottle','icon-lg')}</div>`}
       <div class="item-body"><div class="item-type">${esc(x.type)}</div><div class="item-name">${esc(x.name)}</div><div class="item-sub">${esc(x.note)}</div>
       <div class="item-actions two"><a class="btn secondary" href="${mailto('3rd Grade Stock the Bar — '+x.name,'Hi Room Moms,\n\nCan you send me the adult purchase link for '+x.name+'?')}" >Request Link</a><a class="btn" href="${giftster}" target="_blank" rel="noopener">Claim</a></div></div>
     </article>`).join('');
-    return pageShell(`${pageIntro('Bottles','Specific bottle selections from the Room Mom master list — not a generic bottle page.')}<div class="grid">${cards}</div><p class="admin-note">Alcohol-specific purchase links are maintained by the adult Room Moms; the public site keeps the exact item names and a working request/claim path.</p></div>`);
+    return pageShell(`${pageIntro('Bottles','Specific bottle selections from the Room Mom master list.')}<div class="grid">${cards}</div><p class="admin-note">Alcohol-specific purchase links are maintained by the adult Room Moms; the public site keeps the exact item names and a working request/claim path.</p></div>`);
   }
 
   function experiences(){
@@ -188,8 +189,8 @@
 
   function basket(){
     const items = Array.isArray(D.basketItems) ? D.basketItems : [];
-    const basketContent = items.length ? `<div class="grid">${items.map(x=>`<article class="item-card">${brandVisual(x.name||'Basket Item')}<div class="item-body"><div class="item-type">${esc(x.status||'Received')}</div><div class="item-name">${esc(x.name||'Basket Item')}</div><div class="item-sub">${esc(x.note||'Confirmed contribution')}</div></div></article>`).join('')}</div>` : `<div class="empty-state"><h3>What’s in the Basket</h3><p>No items have been purchased or received yet. This section will populate as contributions are confirmed during weekly updates.</p></div>`;
-    return pageShell(`${pageIntro('Our Basket','A toast to generosity — track the basket as it comes together.','A Toast to Generosity')}<div class="basket-photo" style="margin-left:0;margin-right:0"><img src="assets_KVV/basket_hero_KVV.jpg" alt="Stock the Bar basket inspiration"></div>${progressCard()}${basketContent}<div class="inline-cta"><a class="btn" href="curated.html">Browse More Items ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="contribute.html">Contribute Any Amount</a></div><div class="gala-card"><img src="assets_KVV/gala_poster_KVV.jpg" alt="Knights Gala — October 24, 2026 at Mote SEA"></div></div>`);
+    const basketContent = items.length ? `<div class="grid">${items.map(x=>`<article class="item-card">${brandVisual(x.name||'Basket Item')}<div class="item-body"><div class="item-type">${esc(x.status||'Received')}</div><div class="item-name">${esc(x.name||'Basket Item')}</div><div class="item-sub">${esc(x.note||'Confirmed contribution')}</div></div></article>`).join('')}</div>` : `<div class="empty-state"><h3>What’s in the Basket</h3></div>`;
+    return pageShell(`${pageIntro('Our Basket','', 'A Toast to Generosity')}<div class="basket-photo" style="margin-left:0;margin-right:0"><img src="assets_KVV/basket_hero_KVV.jpg" alt="Stock the Bar basket inspiration"></div>${progressCard()}${basketContent}<div class="inline-cta"><a class="btn" href="curated.html">Browse More Items ${icon('arrow','icon-sm')}</a><a class="btn secondary" href="contribute.html">Contribute Any Amount</a></div><div class="gala-card"><img src="assets_KVV/gala_poster_KVV.jpg" alt="Knights Gala — October 24, 2026 at Mote SEA"></div></div>`);
   }
 
   function detail(){
@@ -198,7 +199,7 @@
     const x=D.experiences.find(v=>v.id===id) || D.experiences[0];
     const heroMarkup=x.hero ? `<div class="detail-hero"><img src="${x.hero}" alt="${esc(x.name)}"></div>` : `<div class="detail-brand-hero">${esc(x.name)}</div>`;
     const features=x.features.map(f=>`<li>${icon('check','icon-sm')}<span>${esc(f)}</span></li>`).join('');
-    return pageShell(`<div class="page-pad"><a class="page-back" href="experiences.html">${icon('back','icon-sm')} Back to Experiences</a>${heroMarkup}<div class="eyebrow">${esc(x.eyebrow)}</div><h1 class="page-title">${esc(x.name)}<br>${esc(x.title)}</h1><p class="page-intro">${esc(x.desc)}</p><ul class="feature-list">${features}</ul><div class="detail-note">For age-restricted purchases or bookings, the adult Room Moms manage the direct business purchase link. Families can claim the contribution on Giftster or contact the Room Moms for the business link.</div><div class="detail-actions"><a class="btn" href="${giftster}" target="_blank" rel="noopener">Claim on Giftster ${icon('external','icon-sm')}</a><a class="btn secondary" href="${mailto('3rd Grade Stock the Bar — '+x.name,'Hi Room Moms,\n\nCan you send me the direct business link for '+x.name+'?')}">Request Business Link ${icon('mail','icon-sm')}</a><a class="btn secondary" href="curated.html">Browse Our Curated List ${icon('arrow','icon-sm')}</a></div></div>`);
+    return pageShell(`<div class="page-pad"><a class="page-back" href="experiences.html">${icon('back','icon-sm')} Back to Experiences</a>${heroMarkup}<div class="eyebrow">${esc(x.eyebrow)}</div><h1 class="page-title">${esc(x.name)}<br>${esc(x.title)}</h1><ul class="feature-list">${features}</ul><div class="detail-note">For age-restricted purchases or bookings, the adult Room Moms manage the direct business purchase link. Families can claim the contribution on Giftster or contact the Room Moms for the business link.</div><div class="detail-actions"><a class="btn" href="${giftster}" target="_blank" rel="noopener">Claim on Giftster ${icon('external','icon-sm')}</a><a class="btn secondary" href="${mailto('3rd Grade Stock the Bar — '+x.name,'Hi Room Moms,\n\nCan you send me the direct business link for '+x.name+'?')}">Request Business Link ${icon('mail','icon-sm')}</a><a class="btn secondary" href="curated.html">Browse Our Curated List ${icon('arrow','icon-sm')}</a></div></div>`);
   }
 
   const renderers={home,bottles,experiences,barware,giftcards,curated,contribute,donate,basket,detail};
